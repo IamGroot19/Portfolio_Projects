@@ -15,8 +15,8 @@ const chatMessages = document.querySelector('.chat-messages');
 const socket = io(); // we have access to io() coz of the script tag added 
 
 /* 'message' is a type of event that all clients listens for. Any message from the server or any other client is displayed
-is first  sent to the server from the client side. This server then sends that message to everyone using 
-io.emit('message', typedMsgFromSomeClient ); */
+is first sent to the server from the client side. This server then sends that message to everyone using 
+io.emit('message', typedMsgFromSomeClient ); . Note that message here is an object containing user who sent that message, time of sending & the actual text typed in the message (check utils/messages.js) for more info */
 socket.on('message', (msg) => {   
     
     // console.log('from someother client boradcasted by server', msg); //for debuggin purpose
@@ -49,15 +49,15 @@ chatForm.addEventListener('submit', (e) => {
     
 });
 
-// take the msg received from server and place it inside chat room by DOM manipulation
+// take the msg object received from server and place it inside chat room by DOM manipulation
 function outputMsgToDOM(message){
 
     /* checkout how the message elements are structured inside chat.html file. There is an outer div, inside which there is a class for recording meta details and another class for recording the actual text file. */
 
     let messageDiv = document.createElement("div"); 
     messageDiv.classList.add("message");
-    messageDiv.innerHTML = `<p class="meta"> Ram <span>9:15pm</span></p>
-    <p class="text"> ${message} </p>`; 
+    messageDiv.innerHTML = `<p class="meta"> ${message["username"]} <span> ${message["time"]}</span></p>
+    <p class="text"> ${message["text"]} </p>`; 
 
     document.querySelector('.chat-messages').appendChild(messageDiv);
 
