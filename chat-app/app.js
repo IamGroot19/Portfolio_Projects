@@ -1,8 +1,9 @@
 const express = require('express');
-const path = require('path')
+const path = require('path');
 const http = require('http'); 
 const socketio = require('socket.io');
-const formatMessage = require('./utils/messages')
+const formatMessage = require('./utils/messages');
+const {userJoin, getCurrentUser} = require('./utils/users');
 
 /* express under the hood uses createServer(). We directly use createServer from node coz we need to combine t with socket.io later on  */
 const app = express();
@@ -16,20 +17,32 @@ const botname = 'ChatApp Bot';
 
 /* Run when client connects; io.on() listens for some kinda event (in this case, listens for a new connection from a client). But then simply listening for new connections is not much helpful. What we want is some sort of bidrectional communication. */
 io.on('connection', (socket) => {
+
+    // 'joinRoom' must be the first event listener since first thing that happens is that a peson joins a chatroom
+    socket.on('joinRoom', ({username,room}) => {
+
+        /* first job when the user enters the chat room is to create a profile for them & store them in the users.js file
+            userJoin() returns an object containing the variables (& also stores user state inside a file)  */
+        const user  = userJoin(socket.id, username, room);
+
+        socket.join(user.room); 
+        
+        /* socket.emit(), socket.broadcast.emit() come inside the joinroom since each client at a given time can be inside one room only. */
+
+        //  Welcome the user when they join - we catch this in the client side using main.js
+        socket.emit('message', formatMessage(botname, 'Welcome to chat app'));  
+
+        /* broadcast when a user connects. Since there are different rooms, you need to broadcast about user's entry to their corresponding room. This is done by using `socket.to(user.room).emit() instead of a simple            `socket.brodcast.emit()`
+        Diff b/w socket.emit(), io.emit(), broadcast.emit() is that:
+            (i)   broadcast.emit() notifies to everyone except for the person who joined 
+            (ii)  socket.emit() only emits to the single client who joined. 
+            (iii) io.emit() emits to everybody */
+        socket.broadcast
+            .to(user.room)
+            .emit('message', formatMessage(botname,  `${user.username} has joined the chat`)); 
+
+    }); 
     
-    // we catch this in the client side using main.js
-    socket.emit('message', formatMessage(botname, 'Welcome to chat app'));  
-
-    /* broadcast when a user connects. Diff b/w socket.emit(), io.emit(), broadcast.emit() is that:
-        (i)   broadcast.emit() notifies to everyone except for the person who joined 
-        (ii)  socket.emit() only emits to the single client who joined. 
-        (iii) io.emit() emits to everybody */
-    socket.broadcast.emit('message', formatMessage('USER',  'A user has joined the chat')); 
-
-    /* Run when client DISCONNECTS [inform server alone thru socket.on() ]. Server lets everyone know that the user has left */
-    socket.on('disconnect', () => {     
-        io.emit('message', formatMessage('USER', 'A user has left the chat') ); 
-    });
 
     // Listen for a chat message (from the client side socket.emit('submit', typedmsg);
     socket.on('chatMessage', (typedMsg) => {
@@ -40,7 +53,11 @@ io.on('connection', (socket) => {
         // emit the message to everybody in the chat room
         io.emit('message', formatMessage('USER', typedMsg) );  
     });
-    
+
+    /* Run when client DISCONNECTS [inform server alone thru socket.on() ]. Server lets everyone know that the user has left */
+    socket.on('disconnect', () => {     
+        io.emit('message', formatMessage('USER', 'A user has left the chat') ); 
+    });
 });
 
 //  
