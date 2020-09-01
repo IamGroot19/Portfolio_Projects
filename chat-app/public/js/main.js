@@ -25,6 +25,8 @@ socket.on('message', (msg) => {
     // once message is displayed, scroll down to display the latest message
     chatMessages.scrollTop = chatMessages.scrollHeight; 
 
+
+
 });
 
 // create an event listener in the client side which listens for an event called 'submit' (when you hit submit button after typing the message). 'e' is the event parameter here. 
@@ -40,6 +42,10 @@ chatForm.addEventListener('submit', (e) => {
     
     // Emit the typed message to server
     socket.emit('chatMessage', typedMsg);
+
+    // Clear the input in the typing box once the message is sent and focus back to empty input textbox
+    e.target.elements.msg.value = ''; 
+    e.target.elements.focus();
     
 });
 
