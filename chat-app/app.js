@@ -50,8 +50,11 @@ io.on('connection', (socket) => {
         // for debugging purpose
         /* console.log('message from client displayed on server: ', typedMsg); */ 
 
-        // emit the message to everybody in the chat room
-        io.emit('message', formatMessage('USER', typedMsg) );  
+        // since a user's message must be posted to their room members only, you need to get the user object to find out their room. 
+        const user = getCurrentUser(socket.id);
+
+        // emit the message to everybody in THAT chat room to which user is connected to
+        io.to(user.room).emit('message', formatMessage(user.username, typedMsg) );  
     });
 
     /* Run when client DISCONNECTS [inform server alone thru socket.on() ]. Server lets everyone know that the user has left */
