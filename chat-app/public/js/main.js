@@ -10,6 +10,7 @@
 
 // we want to access the messages typed in the chatbox (by accessing DOM elements), transfer it server, which inturn wil broadcast it to all other users.
 const chatForm = document.getElementById("chat-form"); 
+const chatMessages = document.querySelector('.chat-messages');
 
 const socket = io(); // we have access to io() coz of the script tag added 
 
@@ -18,8 +19,12 @@ is first  sent to the server from the client side. This server then sends that m
 io.emit('message', typedMsgFromSomeClient ); */
 socket.on('message', (msg) => {   
     
-    // console.log('from someother clinet boradcasted by server', msg); //for debuggin purpose
+    // console.log('from someother client boradcasted by server', msg); //for debuggin purpose
     outputMsgToDOM(msg);
+
+    // once message is displayed, scroll down to display the latest message
+    chatMessages.scrollTop = chatMessages.scrollHeight; 
+
 });
 
 // create an event listener in the client side which listens for an event called 'submit' (when you hit submit button after typing the message). 'e' is the event parameter here. 
@@ -42,6 +47,7 @@ chatForm.addEventListener('submit', (e) => {
 function outputMsgToDOM(message){
 
     /* checkout how the message elements are structured inside chat.html file. There is an outer div, inside which there is a class for recording meta details and another class for recording the actual text file. */
+
     let messageDiv = document.createElement("div"); 
     messageDiv.classList.add("message");
     messageDiv.innerHTML = `<p class="meta"> Ram <span>9:15pm</span></p>
