@@ -38,3 +38,15 @@ chatForm.addEventListener('submit', (e) => {
     
 });
 
+// take the msg received from server and place it inside chat room by DOM manipulation
+function outputMsgToDOM(message){
+
+    /* checkout how the message elements are structured inside chat.html file. There is an outer div, inside which there is a class for recording meta details and another class for recording the actual text file. */
+    let messageDiv = document.createElement("div"); 
+    messageDiv.classList.add("message");
+    messageDiv.innerHTML = `<p class="meta"> Ram <span>9:15pm</span></p>
+    <p class="text"> ${message} </p>`; 
+
+    document.querySelector('.chat-messages').appendChild(messageDiv);
+
+}
