@@ -12,7 +12,16 @@
 const chatForm = document.getElementById("chat-form"); 
 const chatMessages = document.querySelector('.chat-messages');
 
+// Get username & chat room name from query string. {ignoreQueryPrefix: true} will ignore symbols like qn mark
+
+const parsedQueryString = Qs.parse(window.location.search, { ignoreQueryPrefix: true }); 
+const username = parsedQueryString["?username"];
+const room = parsedQueryString["room"];
+
 const socket = io(); // we have access to io() coz of the script tag added 
+
+// Emit an event 'joinRoom' & send an object containing username, room name which can be caught with an event listener on the server side.
+socket.emit('joinRoom', {username, room});
 
 /* 'message' is a type of event that all clients listens for. Any message from the server or any other client is displayed
 is first sent to the server from the client side. This server then sends that message to everyone using 
@@ -44,8 +53,13 @@ chatForm.addEventListener('submit', (e) => {
     socket.emit('chatMessage', typedMsg);
 
     // Clear the input in the typing box once the message is sent and focus back to empty input textbox
+
+    /* I am getting an Uncaught typeError :  focus is not a function  alhough console.log() prints it out to be as a function
+    console.log(typeof e.target.elements.msg.value );
+    console.log(typeof e.target.elements.msg.focus ); */
+
     e.target.elements.msg.value = ''; 
-    e.target.elements.focus();
+    //e.target.elements.focus();
     
 });
 
