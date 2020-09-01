@@ -32,6 +32,7 @@ io.on('connection', (socket) => {
         //  Welcome the user when they join - we catch this in the client side using main.js
         socket.emit('message', formatMessage(botname, 'Welcome to chat app'));  
 
+
         /* broadcast when a user connects. Since there are different rooms, you need to broadcast about user's entry to their corresponding room. This is done by using `socket.to(user.room).emit() instead of a simple            `socket.brodcast.emit()`
         Diff b/w socket.emit(), io.emit(), broadcast.emit() is that:
             (i)   broadcast.emit() notifies to everyone except for the person who joined 
@@ -67,6 +68,7 @@ io.on('connection', (socket) => {
     /* Run when client DISCONNECTS [inform server alone thru socket.on() ]. Server lets everyone know that the user has left */
     socket.on('disconnect', () => {     
         const user = userLeave(socket.id);
+        
         if(user){
             io.to(user.room).emit('message', formatMessage(user.username, `${user.username} has left the chat`) ); 
         } 

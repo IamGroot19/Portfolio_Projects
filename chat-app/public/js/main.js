@@ -11,6 +11,9 @@
 // we want to access the messages typed in the chatbox (by accessing DOM elements), transfer it server, which inturn wil broadcast it to all other users.
 const chatForm = document.getElementById("chat-form"); 
 const chatMessages = document.querySelector('.chat-messages');
+const roomName = document.getElementById('room-name'); // from chat.html
+const userList  = document.getElementById('users')     // from chat.html
+
 
 // Get username & chat room name from query string. {ignoreQueryPrefix: true} will ignore symbols like qn mark
 
@@ -33,9 +36,13 @@ socket.on('message', (msg) => {
 
     // once message is displayed, scroll down to display the latest message
     chatMessages.scrollTop = chatMessages.scrollHeight; 
+});
 
+// WARNING: The input must be exactly (verbatim) {room, users} because you are passing it as a set and if key-value pairs change then you will get undefined along the chain. 
+socket.on('roomUsers', ( {room, users}) => {
 
-
+    outputRoomName(room);
+    outputUserSidebar(users);
 });
 
 // create an event listener in the client side which listens for an event called 'submit' (when you hit submit button after typing the message). 'e' is the event parameter here. 
@@ -75,4 +82,15 @@ function outputMsgToDOM(message){
 
     document.querySelector('.chat-messages').appendChild(messageDiv);
 
+}
+
+// Update room name to DOM (side bar)
+function outputRoomName(room){
+    roomName.innerText = room; 
+}
+
+// Update list of updated users to sidebar (DOM)
+function outputUserSidebar(updatedUserList){
+
+    userList.innerHTML = ` ${ updatedUserList.map( user => `<li> ${user.username} </li>`).join('')} `;
 }
