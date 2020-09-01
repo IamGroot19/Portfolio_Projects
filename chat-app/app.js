@@ -41,6 +41,13 @@ io.on('connection', (socket) => {
             .to(user.room)
             .emit('message', formatMessage(botname,  `${user.username} has joined the chat`)); 
 
+        // Send Users & room info after a new user has joined that room. To do that emit an event called 'roomUsers' that sends an object containing the room name and the list of users in the room as data. In the client side, there will be an eventistener waiting for the 'roomUsers' event to occur who then updates the sidebar via DOM Maniupaltion.
+        io.to(user.room).emit('roomUsers', {
+            room: user.room,
+            users: getRoomUsers(user.room)
+        });
+
+
     }); 
     
 
@@ -63,6 +70,12 @@ io.on('connection', (socket) => {
         if(user){
             io.to(user.room).emit('message', formatMessage(user.username, `${user.username} has left the chat`) ); 
         } 
+
+        // You also need to update the sidebar with new set of users once a user leaves the room
+        io.to(user.room).emit('roomUsers', {
+            room: user.room,
+            users: getRoomUsers(user.room)
+        });
     });
 });
 
