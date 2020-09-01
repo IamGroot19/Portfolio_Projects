@@ -3,7 +3,7 @@ const path = require('path');
 const http = require('http'); 
 const socketio = require('socket.io');
 const formatMessage = require('./utils/messages');
-const {userJoin, getCurrentUser} = require('./utils/users');
+const {userJoin, getCurrentUser, userLeave, getRoomUsers } = require('./utils/users');
 
 /* express under the hood uses createServer(). We directly use createServer from node coz we need to combine t with socket.io later on  */
 const app = express();
@@ -59,7 +59,10 @@ io.on('connection', (socket) => {
 
     /* Run when client DISCONNECTS [inform server alone thru socket.on() ]. Server lets everyone know that the user has left */
     socket.on('disconnect', () => {     
-        io.emit('message', formatMessage('USER', 'A user has left the chat') ); 
+        const user = userLeave(socket.id);
+        if(user){
+            io.to(user.room).emit('message', formatMessage(user.username, `${user.username} has left the chat`) ); 
+        } 
     });
 });
 
