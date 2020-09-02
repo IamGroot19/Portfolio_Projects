@@ -83,6 +83,8 @@ io.on('connection', (socket) => {
 
 //  
 
-server.listen( process.env.PORT || 3000, () => {
-    console.log("Server started running...");
+
+PORT =  process.env.PORT || 5500;
+server.listen( PORT, () => {
+    console.log("Server started listening at port: ", PORT );
 }); 
