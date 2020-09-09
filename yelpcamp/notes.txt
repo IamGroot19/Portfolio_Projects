@@ -2,5 +2,7 @@
 
 1.1 INITIAL ROUTES
     * Add Landing page
-    * Add campgrounds page that lists all campgrounds
-    * Each campground has: a) Name b) Image
+    * Add Campgrounds page that lists all campgrounds
+    * Each campground  in the campgrounds.ejs has: a) Name b) Image
+
+1.2 SETUP THE PARTIALS 
