@@ -1,0 +1,5 @@
+/////////  SECTION 1 - Basics /////////////////////
+
+* Add Landing page
+* Add campgrounds page that lists all campgrounds
+* Each campground has: a) Name b) Image

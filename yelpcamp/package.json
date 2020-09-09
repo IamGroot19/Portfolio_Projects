@@ -1,0 +1,16 @@
+{
+  "name": "yelpcamp-app",
+  "version": "1.0.0",
+  "description": "Yelp website for camping folks",
+  "main": "app.js",
+  "dependencies": {
+    "ejs": "^3.1.5",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bharath Ram",
+  "license": "MIT"
+}
