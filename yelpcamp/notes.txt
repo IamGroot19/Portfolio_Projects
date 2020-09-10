@@ -1,3 +1,6 @@
+APP is divided into various versions (since there are various sections). 
+Once a section is completed, I put it in a separate branch - so as to store the development in a section by section basis (& comeback to it if need be it).
+
 /////////  SECTION 1 - Basics /////////////////////
 
 1.1 INITIAL ROUTES
@@ -18,4 +21,10 @@
     * NOTE: Above classes flex-wrap, flex, tex center are part of bootstrap not html
 
 1.5 STYLING(cont'd): Basic Navbar & Form design
-    * 
+    
+///////////  SECTION 2 - Data Persistence ///////////////////
+
+2.1 ADDING & CONFIGURING MONGODB, MONGOOSE
+    * Connect Mongoose to the app
+    * Create basic Schema for the campground (Just image, name)
+    * Create & store in db whenever a campground is added via "/campgrounds/new" in POST "/campgrounds" route.

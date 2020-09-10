@@ -1,5 +1,26 @@
 let express = require('express');
 let bodyParser = require('body-parser');
+let mongoose = require('mongoose');
+
+mongoose.connect("mongodb://localhost/yelpCamp_db",  
+                { 
+                    useNewUrlParser: true,
+                    useUnifiedTopology: true
+                }, 
+                (err, client) => {
+                    if (err) return console.log(err)
+                    console.log("Successfully connected to DB...");
+                });
+
+// SCHEMA SETUP 
+
+let campgroundSchema = new mongoose.Schema({
+    name: String,
+    image: String
+}); 
+
+let Campground = mongoose.model("Campground", campgroundSchema);
+
 
 let app = express();
 app.use( bodyParser.urlencoded( { extended: true } ) );
@@ -10,30 +31,31 @@ app.get("/", (req,res) => {
     res.render("landing");
 });
 
-var camps = [
-    { name: "Tada" , image:" https://www.photosforclass.com/download/px_699558" },
-    { name: "Ooty", image:"https://www.photosforclass.com/download/px_1840421"},
-    { name: "Tada" , image:" https://www.photosforclass.com/download/px_699558" },
-    { name: "Ooty", image:"https://www.photosforclass.com/download/px_1840421"},
-    { name: "Moonar", image: "https://www.photosforclass.com/download/px_712067"},
-    { name: "Moonar", image: "https://www.photosforclass.com/download/px_712067"}
-];
-
 app.get("/campgrounds", (req,res) => {
 
-    res.render("campgrounds.ejs", {camps:camps}); 
+    Campground.find( {}, (err, allCamps) => {
+        if(err) { console.log(err); }
+        else{
+            res.render("campgrounds.ejs", {camps:allCamps});
+        }
+    }); 
+
+     
 });
 
 
 app.post('/campgrounds', (req,res) => {
 
-
-    
     let name = req.body.campName; 
     let image = req.body.campImg; 
     let campgrd = { name: name, image: image };
-    camps.push(campgrd);
-    console.log(camps);
+    Campground.create(campgrd)
+        .then( (newlyCreatedCamp) => {
+            console.log(campgrd);
+        })
+        .catch( (err) => {
+            return console.log(err);
+        });
     res.redirect("/campgrounds");
 }); 
 
