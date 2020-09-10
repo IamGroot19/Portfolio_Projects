@@ -16,3 +16,6 @@
     * Basic grid system for each campground (including `display: flex; flex-wrap; wrap;` to style attribute to make grid more flexible).
     * Add a `text-center` bootstrap class to center the text for each campground Image
     * NOTE: Above classes flex-wrap, flex, tex center are part of bootstrap not html
+
+1.5 STYLING(cont'd): Basic Navbar & Form design
+    * 
