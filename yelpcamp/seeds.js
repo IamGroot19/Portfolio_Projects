@@ -29,18 +29,17 @@ async function seedDB(){
         
             let campground = await Campground.create(seed);
             let comment = await Comment.create({
-            text: "This place is great, but I wish there was internet",
-            author: "Homer"
-        });
+                text: "This place is great, but I wish there was internet",
+                author: "Homer"
+            });
 
-        campground.comments.push(comment); // We are doing data association here
-        campground.save(); 
+            campground.comments.push(comment); // We are doing data association here
+            campground.save(); 
         }
     }
     catch(err){
         console.log(err);
     }
-    
 }
 
 module.exports = seedDB;

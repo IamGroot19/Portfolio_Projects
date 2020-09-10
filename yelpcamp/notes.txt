@@ -69,5 +69,11 @@ OVERALL ISSUES FACED IN Section 2:
     - Do module.exports in campgrounds.js and import in app.js
 
 3.2 CREATE A SEEDS FILE (seeds.js)
-    - Point of a seeds file is to empty everything in my DB amd then it's going to add 3 or 4 campgrounds and each one will have a few comments. (We need some starting sample data to work with). 
     - Everytime we update the schema, instead of manually doing everything, executing the seeds.js file will empty the database, fill it in with 3 or 4 sample records. 
+    - Workflow will be:
+        # Create a seeds.js file
+        # Remove all campgrounds, then comments.
+        # Add a few hardcoded campgrounds to the collections.
+        # Add a same comment to each of the campground record (via data association concept)
+        
+    - Next off, create a 'comment.js' file under the 'db' directory
