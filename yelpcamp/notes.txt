@@ -75,5 +75,11 @@ OVERALL ISSUES FACED IN Section 2:
         # Remove all campgrounds, then comments.
         # Add a few hardcoded campgrounds to the collections.
         # Add a same comment to each of the campground record (via data association concept)
-        
-    - Next off, create a 'comment.js' file under the 'db' directory
+
+    - Next off, create a 'comment.js' file under the 'db' directory and inside that create the commentSchema
+    - Associate the commentSchema with campgroundSchema inside campgrounds.js
+
+3.3 TRANSFER ACTUAL COMMENTS DATA FROM COMMENTS COLLECTION TO CAMPGROUND COLLECTION
+    - If you open up any record of campground, you will only see some object ID for each of the comment.
+    - What we actually want is to pass on the comment itself to the show.ejs along with other data related to campgrounds. To do that you need to populate the campground record fetched inside the SHOW route handler.
+    - Then pass on the entire campground object inside the show.ejs and display the comments on that page

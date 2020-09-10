@@ -17,7 +17,7 @@ app.use( bodyParser.urlencoded( { extended: true } ) );
 app.set("view engine", "ejs"); 
 
 // Purge the DB
-seedDB();
+//seedDB();
 
 ////////////  Setting up basic routes  /////////////////////
 
@@ -67,15 +67,26 @@ app.get("/campgrounds/new", (req,res) => {
 
 app.get("/campgrounds/:searchID", (req,res)=>{
 
-    Campground.findById(req.params.searchID )
+    Campground.findById(req.params.searchID)
+        .populate("comments")
+        .exec( (err, retrievedCamp) => {
+            
+            if(err){ console.log(err); }
+            else{
+                //console.log(retrievedCamp);
+                res.render( "show.ejs", {camp:retrievedCamp});     
+            }
+        }); 
+        /* Fd out a way to make this work with promises
         .then( (retrievedCamp) => {
-            //res.send(retrievedCamp);
-            res.render( "show.ejs", {camp:retrievedCamp});
+            
+            console.log(retrievedCamp);
+           // res.render( "show.ejs", {camp:retrievedCamp});
         })
         .catch( (err) => {
             console.log(err);
         });
-
+*/
 });
 /////////////  END OF ROUTING //////////
 
