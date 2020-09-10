@@ -1,6 +1,7 @@
 let express = require('express');
 let bodyParser = require('body-parser');
 let mongoose = require('mongoose');
+let seedDB = require('./seeds');
 let Campground = require('./db/campgrounds.js');
 
 mongoose.connect("mongodb://localhost/yelpCamp_db",  
@@ -10,13 +11,15 @@ mongoose.connect("mongodb://localhost/yelpCamp_db",
                     console.log("Successfully connected to DB...");
                 });
 
-// SCHEMA SETUP 
 
 let app = express();
 app.use( bodyParser.urlencoded( { extended: true } ) );
 app.set("view engine", "ejs"); 
 
-/// Setting up basic routes
+// Purge the DB
+seedDB();
+
+////////////  Setting up basic routes  /////////////////////
 
 // homepage
 app.get("/", (req,res) => {
