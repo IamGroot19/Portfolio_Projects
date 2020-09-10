@@ -16,12 +16,24 @@ mongoose.connect("mongodb://localhost/yelpCamp_db",
 
 let campgroundSchema = new mongoose.Schema({
     name: String,
-    image: String
+    image: String,
+    description: String
 }); 
 
 let Campground = mongoose.model("Campground", campgroundSchema);
+/*
+Campground.create({
+    name: "Tada", 
+    image:"https://www.photosforclass.com/download/px_699558", 
+    description: "Photo of our Tada visit lastyear"
+});
 
-
+Campground.create({
+    name: "OOTY", 
+    image:"https://www.photosforclass.com/download/px_699558", 
+    description: "Photo of best hillstation camp in India"
+});
+*/
 let app = express();
 app.use( bodyParser.urlencoded( { extended: true } ) );
 app.set("view engine", "ejs"); 
@@ -39,7 +51,7 @@ app.get("/campgrounds", (req,res) => {
     Campground.find( {}, (err, allCamps) => {
         if(err) { console.log(err); }
         else{
-            res.render("campgrounds.ejs", {camps:allCamps});
+            res.render("index.ejs", {camps:allCamps});
         }
     }); 
 
@@ -51,7 +63,8 @@ app.post('/campgrounds', (req,res) => {
 
     let name = req.body.campName; 
     let image = req.body.campImg; 
-    let campgrd = { name: name, image: image };
+    let desc = req.body.description;
+    let campgrd = { name: name, image: image, description:desc };
     Campground.create(campgrd)
         .then( (newlyCreatedCamp) => {
             console.log(campgrd);
@@ -70,13 +83,13 @@ app.get("/campgrounds/new", (req,res) => {
 
 
 // SHOW route
-app.get("/campgrounds/:searchName", (req,res)=>{
 
-    console.log(req.params.searchName);
-   Campground.findOne( {name:req.params.searchName} )
+app.get("/campgrounds/:searchID", (req,res)=>{
+
+    Campground.findById(req.params.searchID )
         .then( (retrievedCamp) => {
-            res.send(retrievedCamp);
-            //res.render( "showParticularCamp.ejs", {camp:retrievedCamp});
+            //res.send(retrievedCamp);
+            res.render( "show.ejs", {camp:retrievedCamp});
         })
         .catch( (err) => {
             console.log(err);

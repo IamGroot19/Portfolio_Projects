@@ -11,35 +11,52 @@ NOTE: The Master Branch will be the most updated branch.
     * Each campground  in the campgrounds.ejs has: a) Name b) Image
 
 1.2 SETUP THE PARTIALS 
+    * commit fa5ef8acb563b56c8fdbc82801da5ce977062162
+    * commit 4ba3d97b625b395a89930d97144a5d882bcd173c
 
 1.3 FEATURE TO ADD NEW CAMPGROUNDS
+    * commit c8bd3f52bea63e087e0a5a7cc26a08445a44a357
     * Setup POST Request routes.
     * REST API conventions, if you have a page xyz where you are seeing abc (using GET), if you want to add more abc, you'd have setup a POST request to the same xyz. Also, you need to create a separate page like xyz/new where you put up a form to create a new istance of abc. 
 
-1.4 STYLING THE CAMPGROUNDS PAGE
+1.4 STYLING THE CAMPGROUNDS PAGE (commit b5ef2f4b650d23084a759447d81c681d0c6fb15c )
     * Add a jumbotron
     * Basic grid system for each campground (including `display: flex; flex-wrap; wrap;` to style attribute to make grid more flexible).
     * Add a `text-center` bootstrap class to center the text for each campground Image
     * NOTE: Above classes flex-wrap, flex, tex center are part of bootstrap not html
 
 1.5 STYLING(cont'd): Basic Navbar & Form design
-
+    * commit e87fecfa44a6fb129d7726e7dc9b2d626c213c4e
+    * commit b785b416b36729a3d48ff654674cf8340b3b47f1
+      
 Overall issues faced:
     * Styling bootstrap was a little difficult (especially the image wrapping parts).
 
+CREATED A NEW BRANCH CALLED `yelpcamp_version1` - for later reference.
+
 ///////////  SECTION 2 - Data Persistence ///////////////////
 
-2.1 ADDING & CONFIGURING MONGODB, MONGOOSE
+2.1 ADDING & CONFIGURING MONGODB, MONGOOSE (commit f16f4b21087179099f3f7066f409ce57891e3a22)
     * Connect Mongoose to the app
     * Create basic Schema for the campground (Just image, name)
     * Create & store in db whenever a campground is added via "/campgrounds/new" in POST "/campgrounds" route.
 
-2.2 SHOW PAGE
+2.2 SHOW PAGE 
     * Wrt to the table of RESTful routes, till now INDEX, NEW, CREATE routes have been defined.
     * Next up we want to create the SHOW route. 
-    * WARNING: Always put the NEW route before SHOW route (express scans list of declared routes from top to bottom). Else whenever you try to go to 'campgrounds/new' route that ',ew' in itself will be treated as an object named "new" and server will try to find it for you. 
-    * As a followup to above point, ensure that no camp with the name 'new' is created - user will never be able to find that record even though it gets stored in DB. In the longer, you'd want to create a form searching different campgrounds and redirecting users to the searched page.
+    * WARNING: Always put the NEW route before SHOW route (express scans list of declared routes from top to bottom). Else whenever you try to go to 'campgrounds/new' route that 'new' in itself will be treated as an object named "new" and server will try to find it for you. 
+    
 
+2.3 BRIEF DETOUR - Change Campground Schema
+    * Changing database schema to include a 'Description' field for each record (Had to purge the DB before changing schema since we dont want different formatted records).
+    * Create a couple of dummy object and test it out.
+    * Rename the campgrounds.ejs to index.ejs (per thhe RESTful conventions & the table)
+
+2.4 CREATE THE ejs TEMLPLATE FOR 'SHOW' route
+    - The campgrounds will be indexed with the help of the mongoDB id (instead of using the name which is a non-unique way to identify each campground which may result in some conflicts).
+    - Use `Campground.findByID()` to fetch that unique campground record and send it to 'show.ejs' which can then render it.
+    - Modify 'campgrounds/new' to include a form field for 'Description'
+    - Create a 'show.ejs' template that displays location Name, Image, Description (simply, styling will be done later).
 
 OVERALL ISSUES FACED IN Section 2:
     * Forms didn't deliver data via req.body(Issue: I had forgotten to include 'name' attribute to input fields).
