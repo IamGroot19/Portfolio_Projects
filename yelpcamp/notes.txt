@@ -47,12 +47,12 @@ CREATED A NEW BRANCH CALLED `yelpcamp_version1` - for later reference.
     * WARNING: Always put the NEW route before SHOW route (express scans list of declared routes from top to bottom). Else whenever you try to go to 'campgrounds/new' route that 'new' in itself will be treated as an object named "new" and server will try to find it for you. 
     
 
-2.3 BRIEF DETOUR - Change Campground Schema
+2.3 BRIEF DETOUR - Change Campground Schema (2.2 + 2.3's commits together: commit a5b99e699b0ca63d861c4789dc2e0fac54d1111b)
     * Changing database schema to include a 'Description' field for each record (Had to purge the DB before changing schema since we dont want different formatted records).
     * Create a couple of dummy object and test it out.
     * Rename the campgrounds.ejs to index.ejs (per thhe RESTful conventions & the table)
 
-2.4 CREATE THE ejs TEMLPLATE FOR 'SHOW' route
+2.4 CREATE THE ejs TEMLPLATE FOR 'SHOW' route (commit 1bbb7400cf7b2fe0406a71fc159e0fb7af9de918)
     - The campgrounds will be indexed with the help of the mongoDB id (instead of using the name which is a non-unique way to identify each campground which may result in some conflicts).
     - Use `Campground.findByID()` to fetch that unique campground record and send it to 'show.ejs' which can then render it.
     - Modify 'campgrounds/new' to include a form field for 'Description'
@@ -60,6 +60,10 @@ CREATED A NEW BRANCH CALLED `yelpcamp_version1` - for later reference.
 
 OVERALL ISSUES FACED IN Section 2:
     * Forms didn't deliver data via req.body(Issue: I had forgotten to include 'name' attribute to input fields).
-    * 
+    * Took me some time to figure out that indexing each campground by mongodb id is much safer than using the camp's name (might resut in conflicts)
 
-//////////
+////////// SECTION 3 - Comment ///////////////
+
+3.1 REFACTOR MONGOOSE CODE
+    - Create a 'db' directory and put all db related code there.
+    - Do module.exports in campgrounds.js and import in app.js

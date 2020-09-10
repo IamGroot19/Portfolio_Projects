@@ -1,12 +1,10 @@
 let express = require('express');
 let bodyParser = require('body-parser');
 let mongoose = require('mongoose');
+let Campground = require('./db/campgrounds.js');
 
 mongoose.connect("mongodb://localhost/yelpCamp_db",  
-                { 
-                    useNewUrlParser: true,
-                    useUnifiedTopology: true
-                }, 
+                { useNewUrlParser: true, useUnifiedTopology: true }, 
                 (err, client) => {
                     if (err) return console.log(err)
                     console.log("Successfully connected to DB...");
@@ -14,26 +12,6 @@ mongoose.connect("mongodb://localhost/yelpCamp_db",
 
 // SCHEMA SETUP 
 
-let campgroundSchema = new mongoose.Schema({
-    name: String,
-    image: String,
-    description: String
-}); 
-
-let Campground = mongoose.model("Campground", campgroundSchema);
-/*
-Campground.create({
-    name: "Tada", 
-    image:"https://www.photosforclass.com/download/px_699558", 
-    description: "Photo of our Tada visit lastyear"
-});
-
-Campground.create({
-    name: "OOTY", 
-    image:"https://www.photosforclass.com/download/px_699558", 
-    description: "Photo of best hillstation camp in India"
-});
-*/
 let app = express();
 app.use( bodyParser.urlencoded( { extended: true } ) );
 app.set("view engine", "ejs"); 
