@@ -55,11 +55,14 @@ CREATED A NEW BRANCH CALLED `yelpcamp_version1` - for later reference.
 2.4 CREATE THE ejs TEMLPLATE FOR 'SHOW' route
     - The campgrounds will be indexed with the help of the mongoDB id (instead of using the name which is a non-unique way to identify each campground which may result in some conflicts).
     - Use `Campground.findByID()` to fetch that unique campground record and send it to 'show.ejs' which can then render it.
+    - Rename 'campgrounds.ejs' to 'index.ejs' (to stick to REST naming conventions)
+    - Include a 'MORE INFO' button for each campground in the '/campgrounds' route
     - Modify 'campgrounds/new' to include a form field for 'Description'
     - Create a 'show.ejs' template that displays location Name, Image, Description (simply, styling will be done later).
 
 OVERALL ISSUES FACED IN Section 2:
     * Forms didn't deliver data via req.body(Issue: I had forgotten to include 'name' attribute to input fields).
-    * 
+    * Took me some time to figure out that indexing each campground by mongodb id is much safer than using the camp's name (might resut in conflicts)
 
-//////////
+//////////   SECTION 3- COMMENTS ///////////////////
+
