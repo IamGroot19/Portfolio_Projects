@@ -83,3 +83,5 @@ OVERALL ISSUES FACED IN Section 2:
     - If you open up any record of campground, you will only see some object ID for each of the comment.
     - What we actually want is to pass on the comment itself to the show.ejs along with other data related to campgrounds. To do that you need to populate the campground record fetched inside the SHOW route handler.
     - Then pass on the entire campground object inside the show.ejs and display the comments on that page
+
+ ====== Creating branch 3 at this point since for next lecture (comment creation) some file restructuring will be required ============
