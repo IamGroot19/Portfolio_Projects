@@ -83,3 +83,13 @@ OVERALL ISSUES FACED IN Section 2:
     - If you open up any record of campground, you will only see some object ID for each of the comment.
     - What we actually want is to pass on the comment itself to the show.ejs along with other data related to campgrounds. To do that you need to populate the campground record fetched inside the SHOW route handler.
     - Then pass on the entire campground object inside the show.ejs and display the comments on that page
+
+    ========= Branch 3 will be created at this point and will be stashed away for later ref ===========
+
+3.4 CREATE COMMENTS
+   - Inorder to create comments, you need to do nested routing since each comment will come under a particular campground. 
+   - To create a new entry, you need 2 routes viz. (GET) NEW where you fill up a form  b) (POST) CREATE where you add the form data to database. SO in this comments addition case we have:
+    (I)  NEW "/campgrounds/:id/comments/new" GET
+    (II) CREATE "/campgrounds/:id/comments" POST
+    
+    

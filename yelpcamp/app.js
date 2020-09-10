@@ -11,7 +11,6 @@ mongoose.connect("mongodb://localhost/yelpCamp_db",
                     console.log("Successfully connected to DB...");
                 });
 
-
 let app = express();
 app.use( bodyParser.urlencoded( { extended: true } ) );
 app.set("view engine", "ejs"); 
@@ -32,7 +31,7 @@ app.get("/campgrounds", (req,res) => {
     Campground.find( {}, (err, allCamps) => {
         if(err) { console.log(err); }
         else{
-            res.render("index.ejs", {camps:allCamps});
+            res.render("campgrounds/index.ejs", {camps:allCamps});
         }
     }); 
 
@@ -59,7 +58,7 @@ app.post('/campgrounds', (req,res) => {
 // NEW route
 app.get("/campgrounds/new", (req,res) => {
 
-    res.render("newcamp.ejs");
+    res.render("campgrounds/newcamp.ejs");
 }); 
 
 
@@ -74,20 +73,23 @@ app.get("/campgrounds/:searchID", (req,res)=>{
             if(err){ console.log(err); }
             else{
                 //console.log(retrievedCamp);
-                res.render( "show.ejs", {camp:retrievedCamp});     
+                res.render( "campgrounds/show.ejs", {camp:retrievedCamp});     
             }
         }); 
-        /* Fd out a way to make this work with promises
-        .then( (retrievedCamp) => {
-            
-            console.log(retrievedCamp);
-           // res.render( "show.ejs", {camp:retrievedCamp});
-        })
-        .catch( (err) => {
-            console.log(err);
-        });
-*/
 });
+
+app.get('/campgrounds/:id/comments/new', (req,res) => {
+    
+    Campground.findById( req.params.id, (err,camp) => {
+        if(err) { console.log(err); }
+        else{
+            res.render("comments/newComment.ejs", {camp:camp});
+        }
+    });
+    //res.send("Form to add comments");
+});
+
+
 /////////////  END OF ROUTING //////////
 
 PORT = process.env.PORT || 6969; 

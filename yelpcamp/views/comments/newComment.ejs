@@ -1,0 +1,29 @@
+<%- include('../partials/header.ejs') %>
+
+<div class="container">
+    <h1 style="margin-left: 7.5em; margin-block-start: 2em ;"> Add New Comment to <%= camp.name %></h1>
+    <br><br>
+        <form action="/campgrounds/<%=camp._id%>/comments" method="POST">
+            <div style=" width:60%; margin: 0 auto;">
+                <div class="form-group">
+                    <label for="campName"> Camp Name </label>
+                    <input type="text" class="form-control" placeholder="Camp's Name" id="campName" name='campName'>
+                </div>
+                <div class="form-group">
+                    <label for="campImg"> Camp Image </label>
+                    <input type="text" class="form-control" placeholder="Camp Image URL" name='campImg' id="campImg">
+                </div>
+                <div class="form-group">
+                    <label for="campDesc"> Camp Description </label>
+                    <input type="text" class="form-control"  placeholder="Describe the camp!" name='description'>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                <br> 
+                <p style="margin: 0 auto;" class="text-center"> <a href="/campgrounds">Go Back</a> <p>
+            </div>
+        </form>
+    
+</div>
+
+
+<%- include('../partials/footer.ejs') %>
