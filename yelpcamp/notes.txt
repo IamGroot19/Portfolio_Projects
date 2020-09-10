@@ -6,6 +6,13 @@
     * Each campground  in the campgrounds.ejs has: a) Name b) Image
 
 1.2 SETUP THE PARTIALS 
-1.3 FEATURE TO ADD NEW Campgrounds
+
+1.3 FEATURE TO ADD NEW CAMPGROUNDS
     * Setup POST Request routes.
     * REST API conventions, if you have a page xyz where you are seeing abc (using GET), if you want to add more abc, you'd have setup a POST request to the same xyz. Also, you need to create a separate page like xyz/new where you put up a form to create a new istance of abc. 
+
+1.4 STYLING THE CAMPGROUNDS PAGE
+    * Add a jumbotron
+    * Basic grid system for each campground (including `display: flex; flex-wrap; wrap;` to style attribute to make grid more flexible).
+    * Add a `text-center` bootstrap class to center the text for each campground Image
+    * NOTE: Above classes flex-wrap, flex, tex center are part of bootstrap not html

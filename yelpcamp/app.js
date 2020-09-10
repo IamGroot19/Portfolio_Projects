@@ -10,9 +10,12 @@ app.get("/", (req,res) => {
     res.render("landing");
 });
 
-let camps = [
+var camps = [
     { name: "Tada" , image:" https://www.photosforclass.com/download/px_699558" },
     { name: "Ooty", image:"https://www.photosforclass.com/download/px_1840421"},
+    { name: "Tada" , image:" https://www.photosforclass.com/download/px_699558" },
+    { name: "Ooty", image:"https://www.photosforclass.com/download/px_1840421"},
+    { name: "Moonar", image: "https://www.photosforclass.com/download/px_712067"},
     { name: "Moonar", image: "https://www.photosforclass.com/download/px_712067"}
 ];
 
@@ -29,8 +32,8 @@ app.post('/campgrounds', (req,res) => {
     let name = req.body.campName; 
     let image = req.body.campImg; 
     let campgrd = { name: name, image: image };
-    console.log(campgrd);
     camps.push(campgrd);
+    console.log(camps);
     res.redirect("/campgrounds");
 }); 
 
