@@ -1,6 +1,8 @@
 APP is divided into various versions (since there are various sections). 
 Once a section is completed, I put it in a separate branch - so as to store the development in a section by section basis (& comeback to it if need be it).
 
+NOTE: The Master Branch will be the most updated branch.
+
 /////////  SECTION 1 - Basics /////////////////////
 
 1.1 INITIAL ROUTES
@@ -21,10 +23,26 @@ Once a section is completed, I put it in a separate branch - so as to store the 
     * NOTE: Above classes flex-wrap, flex, tex center are part of bootstrap not html
 
 1.5 STYLING(cont'd): Basic Navbar & Form design
-    
+
+Overall issues faced:
+    * Styling bootstrap was a little difficult (especially the image wrapping parts).
+
 ///////////  SECTION 2 - Data Persistence ///////////////////
 
 2.1 ADDING & CONFIGURING MONGODB, MONGOOSE
     * Connect Mongoose to the app
     * Create basic Schema for the campground (Just image, name)
     * Create & store in db whenever a campground is added via "/campgrounds/new" in POST "/campgrounds" route.
+
+2.2 SHOW PAGE
+    * Wrt to the table of RESTful routes, till now INDEX, NEW, CREATE routes have been defined.
+    * Next up we want to create the SHOW route. 
+    * WARNING: Always put the NEW route before SHOW route (express scans list of declared routes from top to bottom). Else whenever you try to go to 'campgrounds/new' route that ',ew' in itself will be treated as an object named "new" and server will try to find it for you. 
+    * As a followup to above point, ensure that no camp with the name 'new' is created - user will never be able to find that record even though it gets stored in DB. In the longer, you'd want to create a form searching different campgrounds and redirecting users to the searched page.
+
+
+OVERALL ISSUES FACED IN Section 2:
+    * Forms didn't deliver data via req.body(Issue: I had forgotten to include 'name' attribute to input fields).
+    * 
+
+//////////

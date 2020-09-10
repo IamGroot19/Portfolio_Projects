@@ -27,10 +27,13 @@ app.use( bodyParser.urlencoded( { extended: true } ) );
 app.set("view engine", "ejs"); 
 
 /// Setting up basic routes
+
+// homepage
 app.get("/", (req,res) => {
     res.render("landing");
 });
 
+// INDEX route
 app.get("/campgrounds", (req,res) => {
 
     Campground.find( {}, (err, allCamps) => {
@@ -43,7 +46,7 @@ app.get("/campgrounds", (req,res) => {
      
 });
 
-
+// CREATE Route
 app.post('/campgrounds', (req,res) => {
 
     let name = req.body.campName; 
@@ -59,11 +62,27 @@ app.post('/campgrounds', (req,res) => {
     res.redirect("/campgrounds");
 }); 
 
+// NEW route
 app.get("/campgrounds/new", (req,res) => {
 
     res.render("newcamp.ejs");
 }); 
 
+
+// SHOW route
+app.get("/campgrounds/:searchName", (req,res)=>{
+
+    console.log(req.params.searchName);
+   Campground.findOne( {name:req.params.searchName} )
+        .then( (retrievedCamp) => {
+            res.send(retrievedCamp);
+            //res.render( "showParticularCamp.ejs", {camp:retrievedCamp});
+        })
+        .catch( (err) => {
+            console.log(err);
+        });
+
+});
 /////////////  END OF ROUTING //////////
 
 PORT = process.env.PORT || 6969; 
