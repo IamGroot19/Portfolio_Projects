@@ -5,10 +5,17 @@ let campgroundSchema = new mongoose.Schema({
     image: String,
     description: String,
     // Data association
+    author: {
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref:"User"  //name of singular version of collection's name
+        },
+        username: String
+    },
     comments: [
         {
            type: mongoose.Schema.Types.ObjectId,
-           ref: "Comment"
+           ref: "Comment" //name of singular version of collection's name
         }
     ]
 }); 

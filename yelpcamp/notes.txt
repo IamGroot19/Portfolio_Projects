@@ -183,4 +183,8 @@ OVERALL ISSUES FACED IN Section 2:
 
     =====   Version 8 will be created at this point =============
     
-5.3 
+5.3 ASSOCIATIONS b/w User & Campground
+    - Users who are loggedin only can see the campground creation form & create campgrounds. To do that add the isLoggedIn middleware to the campground routes.
+    - Nextoff, we want to associate the creator of a campground with their username & password i.e. every campground must show the author who created it.
+        * Make a change in campgroundSchema to include user's name & id alone.
+        * In the route handler POST '/campgrounds' (i.e create new campgrounds) include the author details (from req.user) in the comment object before saving the comments in the database. 
