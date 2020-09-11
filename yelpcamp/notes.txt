@@ -121,3 +121,24 @@ OVERALL ISSUES FACED IN Section 2:
 
 
 ///////////////////// SECTION 4 - AUTHENTICATION /////////////////////////////
+
+4.1 Basic Setup for authentication
+    - Install passport, passport-local, passport-local-mongoose, express-session
+    - Create a 'user.js' file, create a UserSchema to model each user and store it in user.js
+    - requie('..) all installed packages into app.js
+    - Add all passport methods to UserSchema (inside user.js) with the code `UserSchema.plugin(passportLocalMongoose
+
+4.2  Do basic configuration of passport inside app.js
+    - app.use( expressSession(...)); app.use(passport.initialize()); app.use(passport.session()); etc...
+    - `passport.use( new LocalStrategy( User.authenticate() )); `
+    - `passport.serializeUser( User.serializeUser() );`
+    - `passport.deserializeUser( User.deserializeUser() );`
+
+4.3 Setup working skeletal code for Signup
+    - Create a simple signup form template (register.ejs) 
+    - Create GET and POST route handlers for '/register' (GET for entering data into form , post for authenticating & rerouing them into campgrounds page)
+    - Inside the POST route handler:
+        # Create a newUser object (inser their username)
+        # Register the user with the inbuilt User.register()
+        # After registration, authenticate them and redirect them back to '/campgrounds' route.
+        # If in case the username already exists, User.register() throws an error for the same.

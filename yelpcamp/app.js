@@ -139,6 +139,31 @@ app.post( "/campgrounds/:id/comments", (req,res) => {
     }); 
 });
 
+///////////////// END OF AUTH ROUTES /////////////////////////
+
+// Show register form
+app.get( '/register', (req,res)=>{
+    res.render('register.ejs');
+});
+
+// handle signup logic
+app.post("/register", (req,res)=>{
+    
+    let newUser = new User({ username: req.body.username});
+    User.register(newUser, req.body.password, (err,user) =>{
+        if(err) { 
+            console.log(err); 
+            return res.render("/register"); 
+        };
+        
+        // once a user has signed up, we log them in, authenticate them and redirect them to campgrounds page once logged in. If
+        passport.authenticate("local")(req,res, ()=>{
+            res.redirect("/campgrounds");
+        });
+    });
+});
+
+
 /////////////  END OF ROUTING //////////
 
 PORT = process.env.PORT || 6969; 
