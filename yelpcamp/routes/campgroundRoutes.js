@@ -71,7 +71,7 @@ router.get('/:id/edit', (req,res) =>{
 
 });
 
-
+// UPDATE campground
 router.put("/:id", (req,res) => {
     let updatedCamp = { name: req.body.campName, image:req.body.campImg, description:req.body.description};
     
@@ -84,6 +84,21 @@ router.put("/:id", (req,res) => {
             res.redirect('/campgrounds/'+ req.params.id );
         }
     });
+});
+
+
+// DELETE campground
+router.delete("/:id/delete", (req,res) =>{
+
+    Campground.findByIdAndDelete( req.params.id, (err,deletedObj) =>{
+
+        if(err) { console.log(err); res.redirect("/:id"); }
+        else{
+            console.log(deletedObj);
+            res.redirect('/campgrounds'); 
+        }
+    });
+
 });
 
 // Middleware
