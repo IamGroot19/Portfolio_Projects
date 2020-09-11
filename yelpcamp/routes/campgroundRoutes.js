@@ -1,5 +1,6 @@
 ///////////////////  ALL CAMPGROUNDS RELATED ROUTES IN THIS FILE //////////////////////
 let router = require('express').Router();
+const { request } = require('express');
 let Campground = require('../db/campgrounds');
 
 // INDEX route
@@ -61,10 +62,28 @@ router.get('/:id/edit', (req,res) =>{
     Campground.findById( req.params.id)
         .then( (camp) => {
             
-            res.render("editCamp.ejs", {camp:camp});
+            res.render("./campgrounds/editCamp.ejs", {camp:camp});
         })
-        .catch( (err) => {  return console.log(err); });
+        .catch( (err) => {
+            console.log(err);
+            res.redirect("/campgrounds");
+         });
 
+});
+
+
+router.put("/:id", (req,res) => {
+    let updatedCamp = { name: req.body.campName, image:req.body.campImg, description:req.body.description};
+    
+    Campground.findByIdAndUpdate( req.params.id, 
+                                  updatedCamp, 
+                                 (err,updatedCamp) =>{
+        if(err) { console.log(err); res.redirect("/campgrounds"); }
+        else{
+            //console.log(updatedCamp);
+            res.redirect('/campgrounds/'+ req.params.id );
+        }
+    });
 });
 
 // Middleware
