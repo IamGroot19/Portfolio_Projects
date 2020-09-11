@@ -181,5 +181,6 @@ OVERALL ISSUES FACED IN Section 2:
     - In the newComment.ejs template's comment entry form [ route '/campgrounds/:id/comments/new' ], remove the field to enter author's name. 
     - In the commentRoutes.js, we will automatically add user.username to the comment and save it in comments collection (Note: We will get username from req.user.username and since comment pages are accessible only after loggin in, you can be assured that req.user will always be defined - unless some other unusual error pops up).
 
-    ===== Version 8 will be created at this point =============
+    =====   Version 8 will be created at this point =============
+    
 5.3 
