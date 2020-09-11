@@ -152,5 +152,9 @@ OVERALL ISSUES FACED IN Section 2:
     - Add thehyperlinks '/logout', '/login', '/register' methods to Navbar buttons
     - Setup access restrictions for loggedout users 
         # For eg, comment page can't be accessed unless user is logged in. To do that, you need to create & add a 'isLoggedIn' middleware to both the GET & POST route handlers.
-        # 
+
+    - If you are logged in, you shouldn't be able to access Login buttons & similarly for logged out button. 
+        # Inside app.js before the first route define a middleware that adds to req.locals (i.e set of varable available inside each ejs template) the user profile. 
+        # Inside header.ejs, inside navabar code setup visibility access based on if(user){}-else{}
+        
 

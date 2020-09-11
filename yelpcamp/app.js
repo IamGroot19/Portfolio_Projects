@@ -45,6 +45,13 @@ passport.deserializeUser( User.deserializeUser() );
 
 ////////////  Setting up basic routes  /////////////////////
 
+//define a middleware to pass on the user details to every route  (so that you can restrict access based on whether they have logged in or not)
+app.use( (req,res,next) => {
+
+    res.locals.currentUser = req.user; // localsi is the set of data available inside a template
+    next(); //without this it will just stop and wont go to the route
+});
+
 // homepage
 app.get("/", (req,res) => {
     res.render("landing");
@@ -56,7 +63,7 @@ app.get("/campgrounds", (req,res) => {
     Campground.find( {}, (err, allCamps) => {
         if(err) { console.log(err); }
         else{
-            res.render("campgrounds/index.ejs", {camps:allCamps});
+            res.render("campgrounds/index.ejs", {camps:allCamps, currUser:req.user});
         }
     }); 
 
@@ -65,7 +72,7 @@ app.get("/campgrounds", (req,res) => {
 
 // CREATE Route
 app.post('/campgrounds', (req,res) => {
-
+    
     let name = req.body.campName; 
     let image = req.body.campImg; 
     let desc = req.body.description;
