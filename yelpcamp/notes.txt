@@ -188,3 +188,30 @@ OVERALL ISSUES FACED IN Section 2:
     - Nextoff, we want to associate the creator of a campground with their username & password i.e. every campground must show the author who created it.
         * Make a change in campgroundSchema to include user's name & id alone.
         * In the route handler POST '/campgrounds' (i.e create new campgrounds) include the author details (from req.user) in the comment object before saving the comments in the database. 
+
+======== At this point, branch 9 will be created & stowed away that includes all dev done till now (for later ref) ===========
+
+/////////////// SECTION 6 - DELETE & UPDATE (only by owners) //////////////
+
+  <briefly recal the RESTful routing chart (we need a form to enter the modified data & the formneeds to be submitted somewhere )>
+
+6.1 EDITING & UPDATING CAMPGROUND [ (EDIT GET /campgrounds/:id) + (UPDATE PUT /campgrounds/:id)]
+    - Recall that due to its IDEMPOTENT nature PUT request will be used for editing/updating existing data.
+    - Observe that EDIT & UPDATE is like a hybrid of NEW, CREATE & SHOW actions. 
+    
+    - Inorder to edit, you'd want to have a link like 'campground/:id/edit' where you'd see the form (but pre-filled with existing campground data - waiting to be edited). 
+    
+    - In this case, you need to create a new 'edit.ejs' file to update the details. Btw, use 'value' attribute in each html input ( & pass on content of current post thru <%=..%> ) in the ejs form template. 
+    
+    - HTML forms by default don't have a PUT request associated with them - you can only have GET & POST request inside HTML forms(Suprising, ikr!!!). Even if you try to send a PUT request the form will take it as a GET request & not update anything.  
+    
+    - So you need to use a package called 'method-overwrite' to workaround this deficiency of HTML. 
+     
+    - Inside the form tag, instead of 'method' attribute type the following: `?_method=PUT`. HTML will still take it as GET request and send the form data via URL query string but since you install the package in the app.js, that package will watch for any `?_method` and if it finds those attributes it will facilitate treatment of the PUT or DELETE request accordingly. In the app.js file, include the following code `app.use(methodOverride("_method"));` 
+
+    - It might be tempting use a POS request instead of all this trouble, but then to follow RESTful conventions, this is what needs to be done.  
+
+SANITIZING USER input
+    - While you are displaying HTML, a user can send in malicious JS code with <script> tags.
+    - Use the 'express-sanitizer' package to remove all the script tags ( & all contents inside those script tags) out of such code and just return pure html.
+    - `app.use('expressSanitizer());` just after bodyParser's app.use(..). To use, go to the route handlers for  the create & update (or any other place where you have form based inputs). To sanitize the form input variable do ` req.body.someVar = req.sanitize(req.body.someVar); `

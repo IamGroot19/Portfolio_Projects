@@ -55,6 +55,18 @@ router.get("/:id", (req,res)=>{
         }); 
 });
 
+// EDIT campground
+router.get('/:id/edit', (req,res) =>{
+
+    Campground.findById( req.params.id)
+        .then( (camp) => {
+            
+            res.render("editCamp.ejs", {camp:camp});
+        })
+        .catch( (err) => {  return console.log(err); });
+
+});
+
 // Middleware
 function isLoggedIn(req,res,next){
 

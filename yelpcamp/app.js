@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const expressSession = require('express-session');
+const methodOverride = require('method-override');
+
 const User = require('./db/user');
 const seedDB = require('./seeds');
 const Campground = require('./db/campgrounds.js');
@@ -26,6 +28,7 @@ let app = express();
 app.use( bodyParser.urlencoded( { extended: true } ) );
 app.set("view engine", "ejs"); 
 app.use(express.static(__dirname + '/public'));
+app.use(methodOverride("_method"));
 
 // Purge the DB
 //seedDB();
