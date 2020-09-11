@@ -3,6 +3,7 @@ let bodyParser = require('body-parser');
 let mongoose = require('mongoose');
 let passport = require('passport');
 let LocalStrategy = require('passport-local');
+let expressSession = require('express-session');
 let User = require('./db/user');
 let seedDB = require('./seeds');
 let Campground = require('./db/campgrounds.js');
@@ -22,6 +23,25 @@ app.use(express.static(__dirname + '/public'));
 
 // Purge the DB
 //seedDB();
+
+////////////// PASSPORT CONFIGURATION ///////////////////
+
+app.use( expressSession({
+    secret: "Some random sentence for key",
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+// you are defining a new Local Strategy object and are using it inside passport.use().
+// passport-local-mongoose comes with methods like .authenticate(), .serializeUser() etc. that you plug in inside the UserSchema.  If you dont wanna use passport-local-mongoose, you can also define your own methods.btn
+
+passport.use( new LocalStrategy( User.authenticate() )); 
+
+passport.serializeUser( User.serializeUser() );
+passport.deserializeUser( User.deserializeUser() );
 
 ////////////  Setting up basic routes  /////////////////////
 
