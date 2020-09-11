@@ -3,6 +3,7 @@ let bodyParser = require('body-parser');
 let mongoose = require('mongoose');
 let seedDB = require('./seeds');
 let Campground = require('./db/campgrounds.js');
+const Comment = require('./db/comment.js');
 
 mongoose.connect("mongodb://localhost/yelpCamp_db",  
                 { useNewUrlParser: true, useUnifiedTopology: true }, 
@@ -64,16 +65,16 @@ app.get("/campgrounds/new", (req,res) => {
 
 // SHOW route
 
-app.get("/campgrounds/:searchID", (req,res)=>{
+app.get("/campgrounds/:id", (req,res)=>{
 
-    Campground.findById(req.params.searchID)
+    Campground.findById(req.params.id)
         .populate("comments")
-        .exec( (err, retrievedCamp) => {
+        .exec( (err, camp) => {
             
             if(err){ console.log(err); }
             else{
                 //console.log(retrievedCamp);
-                res.render( "campgrounds/show.ejs", {camp:retrievedCamp});     
+                res.render( "campgrounds/show.ejs", {camp:camp});     
             }
         }); 
 });
@@ -83,12 +84,36 @@ app.get('/campgrounds/:id/comments/new', (req,res) => {
     Campground.findById( req.params.id, (err,camp) => {
         if(err) { console.log(err); }
         else{
+            console.log
             res.render("comments/newComment.ejs", {camp:camp});
         }
     });
     //res.send("Form to add comments");
 });
 
+app.post( "/campgrounds/:id/comments", (req,res) => {
+    
+    Campground.findById(req.params.id, (err, camp) =>{
+        if(err) {
+            console.log(err);
+            res.redirect("/campgrounds");
+        }
+        else{
+            console.log(req.body.commentAuthor, req.body.commentText);
+            Comment.create( { author:req.body.commentAuthor, text:req.body.commentText } )
+                .then( (savedComment) => {
+                    console.log(savedComment);
+                    camp.comments.push(savedComment); 
+                    camp.save();
+                    res.redirect('/campgrounds/' + camp._id);
+                })
+                .catch( (err) => {
+                    console.log(err);
+                });
+                
+        }
+    }); 
+});
 
 /////////////  END OF ROUTING //////////
 

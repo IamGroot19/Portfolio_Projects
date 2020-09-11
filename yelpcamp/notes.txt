@@ -86,10 +86,20 @@ OVERALL ISSUES FACED IN Section 2:
 
     ========= Branch 3 will be created at this point and will be stashed away for later ref ===========
 
-3.4 CREATE COMMENTS
+3.4a CREATE COMMENTS
    - Inorder to create comments, you need to do nested routing since each comment will come under a particular campground. 
    - To create a new entry, you need 2 routes viz. (GET) NEW where you fill up a form  b) (POST) CREATE where you add the form data to database. SO in this comments addition case we have:
-    (I)  NEW "/campgrounds/:id/comments/new" GET
-    (II) CREATE "/campgrounds/:id/comments" POST
+        (I)  NEW "/campgrounds/:id/comments/new" GET
+        (II) CREATE "/campgrounds/:id/comments" POST
+   - Since there will be rested routes, some file structuring is required to make things easier.
+   - Inside "views" create 2 directories for "comments" & "campgrounds" for respective templates. 
+
+3.4b CREATING COMMENT (GET ROUTE)
+    - Create a 'newComment.ejs' template for showing a form to fill in comment.
+    - Copy paste basic form code from 'newcamp.ejs' and change form submission URL to '/campgrounds/:id/comments' with POST method.
+    - In the app.js create a new route handler for the URL GET '/campgrounds/:id/comments/new', fetch the camp by id and then pass it on to 'newComment.ejs' template. 
     
-    
+3.4c CREATING COMMENT (POST ROUTE)
+    - Create a route handler for POST '/campgrounds/:id/comments' 
+
+    - NOTE: Read the bootstrap socs once for forms on POST requests. It seems to be working only when the 'id' attribute and 'name' attribute for a particular filed are same strings. 
