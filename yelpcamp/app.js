@@ -103,7 +103,7 @@ app.get("/campgrounds/:id", (req,res)=>{
         }); 
 });
 
-app.get('/campgrounds/:id/comments/new', (req,res) => {
+app.get('/campgrounds/:id/comments/new', isLoggedIn,  (req,res) => {
     
     Campground.findById( req.params.id, (err,camp) => {
         if(err) { console.log(err); }
@@ -115,7 +115,7 @@ app.get('/campgrounds/:id/comments/new', (req,res) => {
     //res.send("Form to add comments");
 });
 
-app.post( "/campgrounds/:id/comments", (req,res) => {
+app.post( "/campgrounds/:id/comments", isLoggedIn, (req,res) => {
     
     Campground.findById(req.params.id, (err, camp) =>{
         if(err) {
@@ -171,6 +171,19 @@ app.post('/login',
         (req,res) =>{ } //callback useless here since middleware takes care of everything - including redirect
 );
 
+app.get('/logout', (req,res)=>{
+
+    req.logout(); //This comes from the passport-local-mongoose methods added to UserSchema
+    res.redirect("/campgrounds");
+});
+
+function isLoggedIn(req,res,next){
+
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect('/login');
+}
 /////////////  END OF ROUTING //////////
 
 PORT = process.env.PORT || 6969; 

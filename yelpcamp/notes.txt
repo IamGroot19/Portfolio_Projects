@@ -146,3 +146,11 @@ OVERALL ISSUES FACED IN Section 2:
 4.4 Setup working skeletal code for Login
     - Setup a login template (login.ejs)
     - Create GET & POST route handlers for '/login' (GET for entering data into form, POST for authenticating & redirecting users into different links depending on whether it was successful or not).
+
+4.5 LOGOUT & ACCESS LOGIC
+    - Setup a POST '/logout' route handler  ( User's pluggedin methods will logout the user with a oneline code).
+    - Add thehyperlinks '/logout', '/login', '/register' methods to Navbar buttons
+    - Setup access restrictions for loggedout users 
+        # For eg, comment page can't be accessed unless user is logged in. To do that, you need to create & add a 'isLoggedIn' middleware to both the GET & POST route handlers.
+        # 
+
