@@ -156,5 +156,7 @@ OVERALL ISSUES FACED IN Section 2:
     - If you are logged in, you shouldn't be able to access Login buttons & similarly for logged out button. 
         # Inside app.js before the first route define a middleware that adds to req.locals (i.e set of varable available inside each ejs template) the user profile. 
         # Inside header.ejs, inside navabar code setup visibility access based on if(user){}-else{}
+
+   ========== At this point Version 6 will be created ====================
         
 
