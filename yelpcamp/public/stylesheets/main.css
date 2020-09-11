@@ -1,0 +1,24 @@
+.img-thumbnail img{
+    width:100%;
+}
+
+.figure img{
+    width: 100%;
+    padding:0;
+}
+
+.img-thumbnail{
+    padding:0;
+}
+
+.figure{
+    padding:0;
+}
+
+body{
+    background: purple;
+}
+
+.figure-caption{
+    padding: 10px;
+}

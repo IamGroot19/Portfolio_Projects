@@ -113,3 +113,9 @@ OVERALL ISSUES FACED IN Section 2:
 
 3.5 STYLING THE show.ejs PAGE
     * Do some bootsrap styling to fit the rough overal structure of the show.ejs template for each campground
+    * Add custom CSS to finetune the styling on ejs
+        - Make a "public/stylesheet" directory for adding css sheets
+        - Create a 'main.css' file for styling show.ejs page
+        - To include the stylesheets in the app, type following in app.js : 'app.use(express.static(__dirname + '/public'));'
+        - In the main.css include some padding & width properties.
+
