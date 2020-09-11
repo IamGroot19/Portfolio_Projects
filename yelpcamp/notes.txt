@@ -188,3 +188,5 @@ OVERALL ISSUES FACED IN Section 2:
     - Nextoff, we want to associate the creator of a campground with their username & password i.e. every campground must show the author who created it.
         * Make a change in campgroundSchema to include user's name & id alone.
         * In the route handler POST '/campgrounds' (i.e create new campgrounds) include the author details (from req.user) in the comment object before saving the comments in the database. 
+
+    ======== At this point, branch 9 will be created & stowed away that includes all dev done till now (for later ref) ===========
