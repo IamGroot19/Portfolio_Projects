@@ -2,6 +2,7 @@
 let router = require('express').Router();
 const { request } = require('express');
 let Campground = require('../db/campgrounds');
+let Comment = require('../db/comment');
 
 // INDEX route
 router.get("/", (req,res) => {
@@ -88,17 +89,18 @@ router.put("/:id", (req,res) => {
 
 
 // DELETE campground
-router.delete("/:id/delete", (req,res) =>{
+router.delete("/:id", (req,res) =>{
 
     Campground.findByIdAndDelete( req.params.id, (err,deletedObj) =>{
 
         if(err) { console.log(err); res.redirect("/:id"); }
-        else{
-            console.log(deletedObj);
-            res.redirect('/campgrounds'); 
-        }
-    });
+        
+        Comment.deleteMany( { _id: { $in: deletedObj.comments }}, (err) => {
 
+            if(err) { console.log(err); }
+            res.redirect('/campgrounds'); 
+        });  
+    });
 });
 
 // Middleware
