@@ -65,41 +65,51 @@ OVERALL ISSUES FACED IN Section 2:
 ////////// SECTION 3 - Comment ///////////////
 
 3.1 REFACTOR MONGOOSE CODE
-    - Create a 'db' directory and put all db related code there.
-    - Do module.exports in campgrounds.js and import in app.js
+    * Create a 'db' directory and put all db related code there.
+    * Do module.exports in campgrounds.js and import in app.js
 
 3.2 CREATE A SEEDS FILE (seeds.js)
-    - Everytime we update the schema, instead of manually doing everything, executing the seeds.js file will empty the database, fill it in with 3 or 4 sample records. 
-    - Workflow will be:
+    * Everytime we update the schema, instead of manually doing everything, executing the seeds.js file will empty the database, fill it in with 3 or 4 sample records. 
+    * Workflow will be:
         # Create a seeds.js file
         # Remove all campgrounds, then comments.
         # Add a few hardcoded campgrounds to the collections.
         # Add a same comment to each of the campground record (via data association concept)
 
-    - Next off, create a 'comment.js' file under the 'db' directory and inside that create the commentSchema
-    - Associate the commentSchema with campgroundSchema inside campgrounds.js
+    * Next off, create a 'comment.js' file under the 'db' directory and inside that create the commentSchema
+    * Associate the commentSchema with campgroundSchema inside campgrounds.js
 
 3.3 TRANSFER ACTUAL COMMENTS DATA FROM COMMENTS COLLECTION TO CAMPGROUND COLLECTION
-    - If you open up any record of campground, you will only see some object ID for each of the comment.
-    - What we actually want is to pass on the comment itself to the show.ejs along with other data related to campgrounds. To do that you need to populate the campground record fetched inside the SHOW route handler.
-    - Then pass on the entire campground object inside the show.ejs and display the comments on that page
+    * If you open up any record of campground, you will only see some object ID for each of the comment.
+    * What we actually want is to pass on the comment itself to the show.ejs along with other data related to campgrounds. To do that you need to populate the campground record fetched inside the SHOW route handler.
+    * Then pass on the entire campground object inside the show.ejs and display the comments on that page
 
     ========= Branch 3 will be created at this point and will be stashed away for later ref ===========
 
 3.4a CREATE COMMENTS
-   - Inorder to create comments, you need to do nested routing since each comment will come under a particular campground. 
-   - To create a new entry, you need 2 routes viz. (GET) NEW where you fill up a form  b) (POST) CREATE where you add the form data to database. SO in this comments addition case we have:
+    * Inorder to create comments, you need to do nested routing since each comment will come under a particular campground. 
+    * To create a new entry, you need 2 routes viz. (GET) NEW where you fill up a form  b) (POST) CREATE where you add the form data to database. SO in this comments addition case we have:
         (I)  NEW "/campgrounds/:id/comments/new" GET
         (II) CREATE "/campgrounds/:id/comments" POST
-   - Since there will be rested routes, some file structuring is required to make things easier.
-   - Inside "views" create 2 directories for "comments" & "campgrounds" for respective templates. 
+    * Since there will be rested routes, some file structuring is required to make things easier.
+    * Inside "views" create 2 directories for "comments" & "campgrounds" for respective templates. 
 
 3.4b CREATING COMMENT (GET ROUTE)
-    - Create a 'newComment.ejs' template for showing a form to fill in comment.
-    - Copy paste basic form code from 'newcamp.ejs' and change form submission URL to '/campgrounds/:id/comments' with POST method.
-    - In the app.js create a new route handler for the URL GET '/campgrounds/:id/comments/new', fetch the camp by id and then pass it on to 'newComment.ejs' template. 
+    
+    * Create a 'newComment.ejs' template for showing a form to fill in comment.
+    * Copy paste basic form code from 'newcamp.ejs' and change form submission URL to '/campgrounds/:id/comments' with POST method.
+    * In the app.js create a new route handler for the URL GET '/campgrounds/:id/comments/new', fetch the camp by id and then pass it on to 'newComment.ejs' template. 
     
 3.4c CREATING COMMENT (POST ROUTE)
-    - Create a route handler for POST '/campgrounds/:id/comments' 
+    * Create a route handler for POST '/campgrounds/:id/comments' 
+    
+    * NOTE: Read the bootstrap docs once for forms on POST requests. It seems to be working only when the 'id' attribute and 'name' attribute for a particular filed are same strings. The handler fetches the campground object from DB, inserts the comments and redirects the user to '/campgrounds/:id' page.
 
-    - NOTE: Read the bootstrap socs once for forms on POST requests. It seems to be working only when the 'id' attribute and 'name' attribute for a particular filed are same strings. 
+    * Include a button to "ADD NEW COMMENT" in the show.ejs template ( of route '/campgrounds/:id/comments' ) that redirects user to '/campgrounds/:id/comments/new' to add comments.
+    
+    * Keep the values 'name' & 'id' attributes as same to make the bootstrap form work. 
+
+   ======  BRANCH 4 (Version4) will be created at this point to store away all the development done till now.
+
+3.5 STYLING THE show.ejs PAGE
+    * Do some bootsrap styling to fit the rough overal structure of the show.ejs template for each campground

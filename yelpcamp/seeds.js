@@ -6,15 +6,17 @@ let seeds = [
     { 
         name: "tada", 
         image: "https://images.pexels.com/photos/2662816/pexels-photo-2662816.jpeg?auto=compress&cs=tinysrgb&h=350", 
-        description:"blah blah blah"
-    },
+        description: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum eveniet dolores id dolorum ipsam voluptatum corrupti temporibus earum totam aliquid tempore labore qui laborum, quaerat modi soluta molestias velit! Molestias corporis perferendis ipsam eveniet magni excepturi earum soluta? Odit nesciunt aut velit rerum similique doloribus incidunt laboriosam. Placeat, perspiciatis incidunt."
+        },
     { 
         name: "ooty", 
-        image: "https://pixabay.com/get/57e8d1454b56ae14f1dc84609620367d1c3ed9e04e5074407c287bd79345c4_340.jpg", description: "etc etc etc"
+        image: "https://images.pexels.com/photos/776117/pexels-photo-776117.jpeg?auto=compress&cs=tinysrgb&h=350",
+         description: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum eveniet dolores id dolorum ipsam voluptatum corrupti temporibus earum totam aliquid tempore labore qui laborum, quaerat modi soluta molestias velit! Molestias corporis perferendis ipsam eveniet magni excepturi earum soluta? Odit nesciunt aut velit rerum similique doloribus incidunt laboriosam. Placeat, perspiciatis incidunt."
     },
     { 
         name: "chennai", 
-        image: "https://pixabay.com/get/53e4d1424b56a814f1dc84609620367d1c3ed9e04e5074407c287bd79345c4_340.jpg", description:"yada yada yadah"
+        image: "https://images.pexels.com/photos/45241/tent-camp-night-star-45241.jpeg?auto=compress&cs=tinysrgb&h=350",
+         description:"Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum eveniet dolores id dolorum ipsam voluptatum corrupti temporibus earum totam aliquid tempore labore qui laborum, quaerat modi soluta molestias velit! Molestias corporis perferendis ipsam eveniet magni excepturi earum soluta? Odit nesciunt aut velit rerum similique doloribus incidunt laboriosam. Placeat, perspiciatis incidunt."
     }
 ]
 
