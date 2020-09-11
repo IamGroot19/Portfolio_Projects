@@ -172,4 +172,3 @@ OVERALL ISSUES FACED IN Section 2:
         WARNING: Put all the app.use() codes below the middleware that passes user object to all ejs files. Else you won't be able to access user object from any other ejs file. 
     -  Rest of the deets figure out based on the error
 
-
