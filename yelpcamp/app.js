@@ -157,12 +157,19 @@ app.post("/register", (req,res)=>{
         };
         
         // once a user has signed up, we log them in, authenticate them and redirect them to campgrounds page once logged in. If
-        passport.authenticate("local")(req,res, ()=>{
-            res.redirect("/campgrounds");
-        });
+        passport.authenticate("local")(req, res, ()=>{ res.redirect("/campgrounds"); });
     });
 });
 
+app.get( '/login', (req, res) =>{
+    res.render('login.ejs');
+});
+
+// you are essentially passing a passport middleware directly to ascertain whether login has happend or not. 
+app.post('/login', 
+        passport.authenticate("local", {successRedirect: "/campgrounds", failureRedirect:"/login"} ), 
+        (req,res) =>{ } //callback useless here since middleware takes care of everything - including redirect
+);
 
 /////////////  END OF ROUTING //////////
 
