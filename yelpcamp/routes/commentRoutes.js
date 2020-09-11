@@ -27,9 +27,15 @@ router.post( "/", isLoggedIn, (req,res) => {
         }
         else{
             //console.log(req.body.commentAuthor, req.body.commentText);
-            Comment.create( { author:req.body.commentAuthor, text:req.body.commentText } )
+            
+            Comment.create( { text:req.body.commentText } )
                 .then( (savedComment) => {
-                   // console.log(savedComment);
+
+                    // you could have also referenced it from user collections but since you'd have load lot of comments lot of times, it'd be faster to save user data in the comment Schema also. Ik this is not a case for strong DB consistency but then it's assumed that username & their userid is never going to change (unless it is deleted in which case their comments will also be deleted).
+                    savedComment.author.id = req.user._id;
+                    savedComment.author.username = req.user.username;
+                    savedComment.save();
+                    console.log(savedComment);
                     camp.comments.push(savedComment); 
                     camp.save();
                     res.redirect('/campgrounds/' + camp._id);

@@ -25,6 +25,7 @@ async function seedDB(){
 
     try{
         await Campground.remove({});
+        /*
         await Comment.remove({});
 
         for(const seed of seeds){
@@ -37,7 +38,7 @@ async function seedDB(){
 
             campground.comments.push(comment); // We are doing data association here
             campground.save(); 
-        }
+        }*/
     }
     catch(err){
         console.log(err);

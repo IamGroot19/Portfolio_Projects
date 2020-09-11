@@ -172,3 +172,14 @@ OVERALL ISSUES FACED IN Section 2:
         WARNING: Put all the app.use() codes below the middleware that passes user object to all ejs files. Else you won't be able to access user object from any other ejs file. 
     -  Rest of the deets figure out based on the error
 
+    ======= Version 7 will be created at this point ============
+
+5.2 ASSOCIATIONS b/w User & comments
+    - On the Comment Schema, we need to add some fields where we can store user ID and user's name. 
+    - Update the author field in comment.js with an object (perform data association)
+    - Clear the db & manually create a couple of entries
+    - In the newComment.ejs template's comment entry form [ route '/campgrounds/:id/comments/new' ], remove the field to enter author's name. 
+    - In the commentRoutes.js, we will automatically add user.username to the comment and save it in comments collection (Note: We will get username from req.user.username and since comment pages are accessible only after loggin in, you can be assured that req.user will always be defined - unless some other unusual error pops up).
+
+    ===== Version 8 will be created at this point =============
+5.3 
