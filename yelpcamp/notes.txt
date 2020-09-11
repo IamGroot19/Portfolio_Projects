@@ -163,3 +163,13 @@ OVERALL ISSUES FACED IN Section 2:
 
 5.1 CLEANING ROUTES
     - Create a 'routes' directory and inside that 3 files campgrounds.js, auth.js, comments.js
+    - Cut/Paste respective routes codes from app.js to respective route files. 
+    - You will face a lot of error - DONOT PANIC, trace them line by line, file by file, using console.log()s. 
+    - You will need to include the packages at various files wherever appropriate. Similarly you will need to add Schemas to various files wherever appropriate. (you will know which ones to include based on the errors)
+    - In the main app.js, you need to add those routes at 2 places. For eg, wrt campground routes you need to add following code:
+        (I) `const campgroundRoutes = require('./routes/campgroundRoutes');` at the begining
+        (II) `app.use( '/campgrounds', campgroundRoutes);` at the routes section.
+        WARNING: Put all the app.use() codes below the middleware that passes user object to all ejs files. Else you won't be able to access user object from any other ejs file. 
+    -  Rest of the deets figure out based on the error
+
+
