@@ -32,6 +32,9 @@ app.use(express.static(__dirname + '/public'));
 app.use(methodOverride("_method"));
 app.use( flash() ); // for flash notifs  (must come before passport configs)
 
+// makes momentJS available for usage in all files as a variable named 'moment'
+app.locals.moment_tz = require('moment-timezone');  
+
 // Purge the DB
 //seedDB();
 

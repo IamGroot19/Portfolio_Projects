@@ -270,3 +270,9 @@ FACING A LOT OF ISSUES WRT FORM DATA HANDLING -LEARN THORUGHLY:
     
 
 ///////////////// SECTION 8 - OTHER MISC STUFF   ////////////////////
+
+8.1 Adding a date of creation for campgrounds & comments using Moment-Timezone 
+   - Change schema of campground & user; add a createdAt field with type as Date & default value as Date.now 
+   - npm install moment-timezone();  
+   - Inside app.js use ` app.locals.moment_tz = require('moment-timezone');  `
+   - Inside the show.ejs type `moment(x.createdAt).tz("Asia/Kolkata").format('DD MMM YYYY, hh:mm a')` where x = comment or camp 
