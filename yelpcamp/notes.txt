@@ -252,3 +252,11 @@ FACING A LOT OF ISSUES WRT FORM DATA HANDLING -LEARN THORUGHLY:
         *  You need to put this message before redirecting - else it wont work. 
         *  You still have to hande it on the template in the in next route. 
     - Inside the first middleware of app.js, add a couple of statements to recognize the essages from various 'categories' of flashes like 'error', 'success' etc... (Eg: res.locala.success = req.flash("success"); )
+
+    - Use flash-connect package.
+    - Put up a boostrap alert component in header.ejs that receives message from flash package.
+    - flash package can send message to different categories (which is stoed in res.locals.categoryname) - these messages will be displayed as flash in the immediate redirect.
+    - Update variosu middlewares & routs with req.flash("success", successMsg) or req.flash("error", errMsg)
+
+7.2 LANDING PAGE REFACTOR
+    - 
