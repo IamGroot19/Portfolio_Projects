@@ -241,3 +241,14 @@ FACING A LOT OF ISSUES WRT FORM DATA HANDLING -LEARN THORUGHLY:
     - WHERE TO USE req.params and WHERE TO USE req.body
     - Know thta for method-overwrite, yu dont need to put a slash before '?' in the form action attribute
     - As always, console.log is your best friend for debugging
+
+    ========== branch 10 wll be created at this point to summarise all development till now ======
+
+////////// SECTION 7 - UI IMPROVEMENTS ///////////////////////
+
+7.1 Using connect-flash package to show onetime flash messages to notify users.
+    - `req.flash("success", "some msg to users");` 
+        *  Loads up the message in the request object and flashes it to user when they redirect to the next page. 'failure' means red background and 'success' green bg.
+        *  You need to put this message before redirecting - else it wont work. 
+        *  You still have to hande it on the template in the in next route. 
+    - Inside the first middleware of app.js, add a couple of statements to recognize the essages from various 'categories' of flashes like 'error', 'success' etc... (Eg: res.locala.success = req.flash("success"); )

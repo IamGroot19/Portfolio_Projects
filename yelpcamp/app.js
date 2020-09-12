@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+let flash = require('connect-flash');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const expressSession = require('express-session');
@@ -29,6 +30,7 @@ app.use( bodyParser.urlencoded( { extended: true } ) );
 app.set("view engine", "ejs"); 
 app.use(express.static(__dirname + '/public'));
 app.use(methodOverride("_method"));
+app.use( flash() ); // for flash notifs  (must come before passport configs)
 
 // Purge the DB
 //seedDB();
@@ -57,6 +59,8 @@ passport.deserializeUser( User.deserializeUser() );
 app.use( (req,res,next) => {
 
     res.locals.currentUser = req.user; // locals is the set of data available inside a template
+    res.locals.success = req.flash("success"); 
+    res.locals.error = req.flash("error");
     next(); //without this it will just stop and wont go to the route
 });
 

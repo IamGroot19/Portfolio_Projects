@@ -14,9 +14,7 @@ router.get("/", (req,res) => {
         else{
             res.render("campgrounds/index.ejs", {camps:allCamps, currUser:req.user});
         }
-    }); 
-
-     
+    });   
 });
 
 // CREATE Route
@@ -27,6 +25,7 @@ router.post('/', isLoggedIn,  (req,res) => {
     let desc = req.body.description;
     let author = { id : req.user._id, username: req.user.username };
     let campgrd = { name: name, image: image, description:desc, author:author };
+    
     Campground.create(campgrd)
         .then( (newlyCreatedCamp) => {
            // console.log(campgrd);
@@ -34,6 +33,7 @@ router.post('/', isLoggedIn,  (req,res) => {
         .catch( (err) => {
             return console.log(err);
         });
+    req.flash("success", "Campground Created Successfully!!!")
     res.redirect("/campgrounds");
 }); 
 
@@ -51,7 +51,7 @@ router.get("/:id", isLoggedIn, (req,res)=>{
         .populate("comments")
         .exec( (err, camp) => {
             
-            if(err){ console.log(err); }
+            if(err){ req.flash("error", "There was a problem in fetching the Campground from database"); }
             else{
                 //console.log(camp);
                 res.render( "campgrounds/show.ejs", {camp:camp});     
@@ -63,6 +63,8 @@ router.get("/:id", isLoggedIn, (req,res)=>{
 router.get('/:id/edit', checkCampgrdOwner, (req,res) =>{
 
     Campground.findById(req.params.id, (err, camp) =>{
+
+        if(err) { req.flash("error", "Campground not found"); }
         res.render("./campgrounds/editCamp.ejs", {camp:camp});
     });
     
@@ -78,6 +80,7 @@ router.put("/:id", (req,res) => {
         if(err) { console.log(err); res.redirect("/campgrounds"); }
         else{
             //console.log(updatedCamp);
+            req.flash("success", "Campground Updated Successfully")
             res.redirect('/campgrounds/'+ req.params.id );
         }
     });
@@ -89,10 +92,12 @@ router.delete("/:id", checkCampgrdOwner, (req,res) =>{
 
     Campground.findByIdAndDelete( req.params.id, (err,deletedObj) =>{
 
-        if(err) { console.log(err); res.redirect("/:id"); }
+        if(err) { req.flash("error", "There was a problem deleting the campground. ");
+                  res.redirect("/:id"); }
         Comment.deleteMany( { _id: { $in: deletedObj.comments }}, (err) => {
 
             if(err) { return console.log(err); }
+            req.flash("success", "Campground deleted successfully.")
             res.redirect('/campgrounds'); 
         });  
     });
@@ -104,6 +109,7 @@ function isLoggedIn(req,res,next){
     if(req.isAuthenticated()){
         return next();
     }
+    req.flash("error", " You need to be logged in to do that!");
     res.redirect('/login');
 }
 
@@ -119,16 +125,18 @@ function checkCampgrdOwner(req,res,next){
                 next();
             }
             else{
+                req.flash("error", "Only Campground owners have permission to Delete/Edit.")
                 res.send("back");
             }
         })
         .catch( (err) => {
+            req.flash("error", "Campground doesn't exist!")
             console.log(err);
             res.redirect("back");
          });
     }
     else{
-        console.log("need to be logged in");
+        req.flash("error", " You need to be logged in to do that!");
         res.send("back");
     }
     

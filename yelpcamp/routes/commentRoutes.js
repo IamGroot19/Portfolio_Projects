@@ -10,9 +10,8 @@ const Comment = require('../db/comment.js')
 router.get('/new', isLoggedIn,  (req,res) => {
     
     Campground.findById( req.params.id, (err,camp) => {
-        if(err) { console.log(err); }
+        if(err) { req.flash("error", "There was a problem in loading new comment's entry form")}
         else{
-            
             res.render("../views/comments/newComment.ejs", {camp:camp});
         }
     });
@@ -23,7 +22,7 @@ router.post( "/", isLoggedIn, (req,res) => {
     
     Campground.findById(req.params.id, (err, camp) =>{
         if(err) {
-            console.log(err);
+            req.flash("error", "There was a problem in fetching Campground from database");
             res.redirect("/campgrounds");
         }
         else{
@@ -39,12 +38,12 @@ router.post( "/", isLoggedIn, (req,res) => {
                     //console.log(savedComment);
                     camp.comments.push(savedComment); 
                     camp.save();
+                   // req.flash("success", "Comment Created Successfully")
                     res.redirect('/campgrounds/' + camp._id);
                 })
                 .catch( (err) => {
-                    console.log(err);
-                });
-                
+                    req.flash("error", "There was a problem in creating your comment");
+                });       
         }
     }); 
 });
@@ -58,10 +57,13 @@ router.get('/:commentID/edit', isCommentOwner, (req,res) =>{
     // for authorising only owners to edit comments
     Comment.findById(req.params.commentID, (err,foundComment) =>{
         
-        if(err){ res.redirect("back"); }
+        if(err){ 
+            req.flash("error", "There was a problem in fetching comments");    
+            res.redirect("back"); 
+        }
         res.render("comments/editComment.ejs", {campID: req.params.id, comment: foundComment});
     
-    })
+    });
     
 });
 
@@ -71,8 +73,11 @@ router.put('/:commentID', isCommentOwner, (req,res) =>{
     Comment.findByIdAndUpdate( req.params.commentID, 
         { text:req.body.commentText },
         (err,foundComment) =>{
-            if(err) { console.log(err); res.redirect('/campgrounds/' + req.params.id); }
+            if(err){ 
+                req.flash("error", "There was a problem in updating your comment"); 
+                res.redirect('/campgrounds/' + req.params.id); }
             else{
+              //  req.flash("success", "Comment Updated Successfully");
                 res.redirect('/campgrounds/'+req.params.id); 
             }
         });
@@ -82,7 +87,13 @@ router.put('/:commentID', isCommentOwner, (req,res) =>{
 router.delete('/:commentID/delete', isCommentOwner, (req,res) =>{
 
     Comment.findByIdAndDelete(req.params.commentID, (err,deletedComm) =>{
+        
+        if(err){
+            req.flash("error", "There was a problem in deleting your comment");
+            res.redirect("/campgrounds/" + req.params.id);
+        }
         //console.log('Comment deleted: ', deletedComm.text);
+        req.flash("success", "Comment Deleted Successfully")
         res.redirect("/campgrounds/" + req.params.id );
     });
 
@@ -100,16 +111,17 @@ function isCommentOwner(req,res,next){
                 next();
             }
             else{
+                req.flash("error", "Each comment can be edited/deleted only by the authors");
                 res.send("back");
             }
         })
         .catch( (err) => {
-            console.log(err);
+            req.flash("error", "There was a problem in fetching comments from database")
             res.redirect("back");
          });
     }
     else{
-        console.log("need to be logged in");
+        req.flash("error", "You need to be logged in to edit/delete comments!")
         res.send("back");
     }
     
@@ -121,6 +133,7 @@ function isLoggedIn(req,res,next){
     if(req.isAuthenticated()){
         return next();
     }
+    req.flash("error", "You need to be logged in to do that!")
     res.redirect('/login');
 }
 
