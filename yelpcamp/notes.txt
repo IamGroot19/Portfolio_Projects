@@ -224,6 +224,7 @@ SANITIZING USER input
 6.4 AUTHORISATION
     - User can delete/edit their own campgrounds (does the current user's id match the author's id for the campground? If yes, they have permission to edit/delete else no).
 
-    - create a middle ware that checks if they are logged in. Pass the middleware to edit or delete roues and if yes, then allow them to edit/delete.
+    - create a middle ware that checks if they are logged in. Pass the middleware to EDIT/UPDATE & DELETE routes and if yes, then allow them to edit/delete.
 
-    
+    - Hide the edit & delete buttons for users who are not logged in or those who are not owners (use an if-else statement inside show.ejs that verifies whether if(currentUser && cureentUser.id==campground.author.id)
+

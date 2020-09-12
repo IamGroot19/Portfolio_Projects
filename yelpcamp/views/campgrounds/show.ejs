@@ -23,6 +23,11 @@
                     <h4> <a href="" > <%= camp.name %> </a> </h4>
                     <p> <%= camp.description %> </p>
                     <p> <em> Written by <%= camp.author.username %> </em></p>
+                    <!-- If a user is signed in AND if they are the owners then show the edit & delete buttons
+                    Recall that currentUser was setup using the 1st middleware in app.js-->
+                    <% if( currentUser && camp.author.id.equals(currentUser._id) ){ %>
+
+
                     <a class="btn btn-warning" href="/campgrounds/<%= camp._id %>/edit"> Edit </a>
                     <form id="delete-form" action="/campgrounds/<%= camp._id %>/?_method=DELETE" method=POST>
                         <button  class="btn btn-danger" > Delete </button>
