@@ -259,4 +259,14 @@ FACING A LOT OF ISSUES WRT FORM DATA HANDLING -LEARN THORUGHLY:
     - Update variosu middlewares & routs with req.flash("success", successMsg) or req.flash("error", errMsg)
 
 7.2 LANDING PAGE REFACTOR
-    - 
+    - Follow the HTML & CSS tuts closely
+
+7.3 PRICE EDITING FOR EACH CAMPGROUND
+    - Add a 'price:String' entry inside the campgroundSchema
+    - In the newcamp.ejs add a input field for entering price
+    - In the editCamp.ejs similarly add a field for modifying price.
+    - In the show.ejs use JS to pull price from the campground object and display to viewer.
+    - Ensure that you retrieve the price data from the forms (for both new & edit cases)
+    
+
+///////////////// SECTION 8 - OTHER MISC STUFF   ////////////////////

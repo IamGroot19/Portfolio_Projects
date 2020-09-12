@@ -23,8 +23,9 @@ router.post('/', isLoggedIn,  (req,res) => {
     let name = req.body.campName; 
     let image = req.body.campImg; 
     let desc = req.body.description;
+    let price = req.body.campPrice; 
     let author = { id : req.user._id, username: req.user.username };
-    let campgrd = { name: name, image: image, description:desc, author:author };
+    let campgrd = { name: name, image: image, description:desc, author:author, price:price };
     
     Campground.create(campgrd)
         .then( (newlyCreatedCamp) => {
@@ -72,7 +73,7 @@ router.get('/:id/edit', checkCampgrdOwner, (req,res) =>{
 
 // UPDATE campground
 router.put("/:id", (req,res) => {
-    let updatedCamp = { name: req.body.campName, image:req.body.campImg, description:req.body.description};
+    let updatedCamp = { name: req.body.campName, image:req.body.campImg, description:req.body.description, price:req.body.campPrice};
     
     Campground.findByIdAndUpdate( req.params.id, 
                                   updatedCamp, 
