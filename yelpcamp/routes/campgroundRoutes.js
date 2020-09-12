@@ -58,18 +58,12 @@ router.get("/:id", (req,res)=>{
 });
 
 // EDIT campground
-router.get('/:id/edit', (req,res) =>{
+router.get('/:id/edit', checkCampgrdOwner, (req,res) =>{
 
-    Campground.findById( req.params.id)
-        .then( (camp) => {
-            
-            res.render("./campgrounds/editCamp.ejs", {camp:camp});
-        })
-        .catch( (err) => {
-            console.log(err);
-            res.redirect("/campgrounds");
-         });
-
+    Campground.findById(req.params.id, (err, camp) =>{
+        res.render("./campgrounds/editCamp.ejs", {camp:camp});
+    });
+    
 });
 
 // UPDATE campground
@@ -89,15 +83,14 @@ router.put("/:id", (req,res) => {
 
 
 // DELETE campground
-router.delete("/:id", (req,res) =>{
+router.delete("/:id", checkCampgrdOwner, (req,res) =>{
 
     Campground.findByIdAndDelete( req.params.id, (err,deletedObj) =>{
 
         if(err) { console.log(err); res.redirect("/:id"); }
-        
         Comment.deleteMany( { _id: { $in: deletedObj.comments }}, (err) => {
 
-            if(err) { console.log(err); }
+            if(err) { return console.log(err); }
             res.redirect('/campgrounds'); 
         });  
     });
@@ -112,4 +105,30 @@ function isLoggedIn(req,res,next){
     res.redirect('/login');
 }
 
+// check if a person owns a campgruond to provide edit & delete access
+function checkCampgrdOwner(req,res,next){
+    
+    if(req.isAuthenticated()){
+
+        Campground.findById( req.params.id)
+        .then( (camp) => {
+            
+            if( camp.author.id.equals(req.user._id) ){
+                next();
+            }
+            else{
+                res.send("back");
+            }
+        })
+        .catch( (err) => {
+            console.log(err);
+            res.redirect("back");
+         });
+    }
+    else{
+        console.log("need to be logged in");
+        res.send("back");
+    }
+    
+}
 module.exports = router; 

@@ -209,9 +209,21 @@ OVERALL ISSUES FACED IN Section 2:
      
     - Inside the form tag, instead of 'method' attribute type the following: `?_method=PUT`. HTML will still take it as GET request and send the form data via URL query string but since you install the package in the app.js, that package will watch for any `?_method` and if it finds those attributes it will facilitate treatment of the PUT or DELETE request accordingly. In the app.js file, include the following code `app.use(methodOverride("_method"));` 
 
-    - It might be tempting use a POS request instead of all this trouble, but then to follow RESTful conventions, this is what needs to be done.  
+    - It might be tempting use a POST request instead of all this trouble, but then to follow RESTful conventions, this is what needs to be done.  
+
+6.2 DELETE CAMPGROUNDS
+    - Insert feature to delelte comments associated with a given campground"
+    - Setup a form inside show.ejs with a button named 'delete'. When you submit the form (i.e click the delete button) you are redirected to app.delete(/campgrounds/:id/delete) route handler.
+    - The route handler then deletes the entry from the database and then redirects user to '/campgrounds' page   
 
 SANITIZING USER input
     - While you are displaying HTML, a user can send in malicious JS code with <script> tags.
     - Use the 'express-sanitizer' package to remove all the script tags ( & all contents inside those script tags) out of such code and just return pure html.
-    - `app.use('expressSanitizer());` just after bodyParser's app.use(..). To use, go to the route handlers for  the create & update (or any other place where you have form based inputs). To sanitize the form input variable do ` req.body.someVar = req.sanitize(req.body.someVar); `
+    - `app.use('expressSanitizer());` just after bodyParser's app.use(..). To use, go to the route handlers for  the create & update (or any other place where you have form based inputs). To sanitize the form input variable do ` req.body.someVar = req.sanitize(req.body.someVar);`
+
+6.4 AUTHORISATION
+    - User can delete/edit their own campgrounds (does the current user's id match the author's id for the campground? If yes, they have permission to edit/delete else no).
+
+    - create a middle ware that checks if they are logged in. Pass the middleware to edit or delete roues and if yes, then allow them to edit/delete.
+
+    
