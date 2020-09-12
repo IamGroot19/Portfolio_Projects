@@ -45,7 +45,7 @@ router.get("/new", isLoggedIn, (req,res) => {
 
 
 // SHOW route
-router.get("/:id", (req,res)=>{
+router.get("/:id", isLoggedIn, (req,res)=>{
 
     Campground.findById(req.params.id)
         .populate("comments")
