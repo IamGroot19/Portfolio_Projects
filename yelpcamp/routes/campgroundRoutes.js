@@ -122,23 +122,23 @@ function checkCampgrdOwner(req,res,next){
         Campground.findById( req.params.id)
         .then( (camp) => {
             
-            if( camp.author.id.equals(req.user._id) ){
+            if( camp.author.id.equals(req.user._id)  || req.user.isAdmin){
                 next();
             }
             else{
                 req.flash("error", "Only Campground owners have permission to Delete/Edit.")
-                res.send("back");
+                res.send("/campgrounds" + camp.id);
             }
         })
         .catch( (err) => {
             req.flash("error", "Campground doesn't exist!")
             console.log(err);
-            res.redirect("back");
+            res.redirect("/campgrounds");
          });
     }
     else{
         req.flash("error", " You need to be logged in to do that!");
-        res.send("back");
+        res.redirect("/campgrounds/"+ camp.id );
     }
     
 }

@@ -1,12 +1,15 @@
 <%- include('partials/header.ejs') %>
+                
 
-<h1> Sign Up </h1>
-
-<form action="/register" method="POST">
-    <input type="text" name="username" placeholder="username">
-    <input type="password" name="password" placeholder="password">
-    <button> Signup </button> 
-</form>
+<div class="container text-center">
+    <h1> SIGN UP </h1>
+    <form action="/register" method="POST">
+            USERNAME  <input type="text" name="username" placeholder="username">  <br> <br>
+            PASSWORD  <input type="password" name="password" placeholder="password"> <br> <br>
+            ADMINCODE <input type="text" name="admincode" placeholder="admincode"> <br> <br> 
+            <button> Signup </button> 
+    </form>
+</div>
 
 <div style="margin:4em;">
     <h3> IMPORTANT NOTE: </h3>
@@ -14,7 +17,7 @@
     <li> Set your password such that it has more than 8 eight characters, a mix of both Upper & Lower alphabets and also symbols. </li>
     <li>Else Chome may show you a warning like "A data breach on a site or app exposed your password".</li>
     <li> The warning doesn't mean that your passwords or any other accounts got hacked. 
-    <li>It means that your password isn't strong enough and it'd be safe to make it strong. </li>
-    <li><a href="https://support.google.com/chrome/thread/23534509?hl=en&msgid=23692520"> Click here </a> for more information </li>   <h5></h5>
+    <li>It means that your password isn't strong enough and it'd be safe to make it strong. <a href="https://support.google.com/chrome/thread/23534509?hl=en&msgid=23692520"> Click here </a> for more information </li>   
+    <li> <strong> NOTE:</strong> Admin Code is optional and is provided to certain users who have admin access. If you haven't been provided with one, you can still signup. </li> </h5>
 </div>
 <%- include('partials/footer.ejs') %>

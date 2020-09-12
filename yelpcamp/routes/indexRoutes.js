@@ -19,6 +19,9 @@ router.get( '/register', (req,res)=>{
 router.post("/register", (req,res)=>{
     
     let newUser = new User({ username: req.body.username});
+    if(req.body.admincode == 'secretADMINcode'){
+        newUser.isAdmin = true;
+    }
     User.register(newUser, req.body.password, (err,user) =>{
         if(err) { 
             req.flash("error", err.message);
@@ -27,7 +30,12 @@ router.post("/register", (req,res)=>{
         
         // once a user has signed up, we log them in, authenticate them and redirect them to campgrounds page once logged in. If
         passport.authenticate("local")(req, res, ()=>{
-            req.flash("success", "Welcome to YelpCamp "+ user.username);
+            if(user.isAdmin){
+                req.flash("success", "Welcome to YelpCamp "+ user.username + ".You are also an Admin");
+            }
+            else{
+                req.flash("success", "Welcome to YelpCamp "+ user.username );
+            }
             res.redirect("/campgrounds"); });
     });
 });

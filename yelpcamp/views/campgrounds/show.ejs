@@ -28,13 +28,17 @@
                     <!-- If a user is signed in AND if they are the owners then show the edit & delete buttons
                     Recall that currentUser was setup using the 1st middleware in app.js-->
                     
-                    <% if( currentUser && camp.author.id.equals(currentUser._id) ){ %>
+                    <% if(currentUser && camp.author.id.equals(currentUser._id) ){ %>
                     
                     <a class="btn btn-md btn-warning" href="/campgrounds/<%= camp._id %>/edit"> Edit </a>
                     
                     <form class="delete-form" action="/campgrounds/<%= camp._id %>/?_method=DELETE" method=POST>
                         <button  class="btn btn-md btn-danger" > Delete </button>
                     </form>
+                    <% } else if (currentUser && currentUser.isAdmin){ %>
+                        <form class="delete-form" action="/campgrounds/<%= camp._id %>/?_method=DELETE" method=POST>
+                            <button  class="btn btn-md btn-danger" > Delete </button>
+                        </form>
                     <% } %>
                 </div>
             </div>
@@ -50,7 +54,7 @@
                             <strong> <%= comment.author.username %> </strong>
                             <span class="float-right"> <em> <%= moment(comment.createdAt).tz("Asia/Kolkata").format('DD MMM YYYY')  %> </em> </span>
                             <p> <%= comment.text %> </p>
-                            <% if(comment.author.id.equals(currentUser.id)) { %>
+                            <% if( currentUser && comment.author.id.equals(currentUser.id) ) { %>
                                 
                                 <a href="/campgrounds/<%= camp._id %>/comments/<%= comment._id %>/edit" class="btn btn-sm btn-warning"> Edit </a>
 
@@ -58,6 +62,10 @@
                                     <button class="btn btn-sm btn-danger"> Delete </button>
                                 </form>
 
+                            <% } else if (currentUser && currentUser.isAdmin){ %>
+                                <form action="/campgrounds/<%= camp._id %>/comments/<%= comment._id %>/delete/?_method=DELETE" method="POST" class="delete-form"> 
+                                    <button class="btn btn-sm btn-danger"> Delete </button>
+                                </form>
                             <% } %>
                             <hr>
                         </div>

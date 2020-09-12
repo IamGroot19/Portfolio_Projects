@@ -51,7 +51,7 @@ router.post( "/", isLoggedIn, (req,res) => {
 
 
 // EDIT comments
-router.get('/:commentID/edit', isCommentOwner, (req,res) =>{
+router.get('/:commentID/edit', isCommentOwnerOrAdmin, (req,res) =>{
 
     //console.log(req.params.id, " ", req.params.commentID);
     // for authorising only owners to edit comments
@@ -68,7 +68,7 @@ router.get('/:commentID/edit', isCommentOwner, (req,res) =>{
 });
 
 // UPDATE comments
-router.put('/:commentID', isCommentOwner, (req,res) =>{
+router.put('/:commentID', isCommentOwnerOrAdmin, (req,res) =>{
 
     Comment.findByIdAndUpdate( req.params.commentID, 
         { text:req.body.commentText },
@@ -84,8 +84,9 @@ router.put('/:commentID', isCommentOwner, (req,res) =>{
 });
 
 // DELETE comments
-router.delete('/:commentID/delete', isCommentOwner, (req,res) =>{
+router.delete('/:commentID/delete', isCommentOwnerOrAdmin, (req,res) =>{
 
+    
     Comment.findByIdAndDelete(req.params.commentID, (err,deletedComm) =>{
         
         if(err){
@@ -100,14 +101,14 @@ router.delete('/:commentID/delete', isCommentOwner, (req,res) =>{
 });
 
 // check if a person owns a campgruond to provide edit & delete access
-function isCommentOwner(req,res,next){
-    
+function isCommentOwnerOrAdmin(req,res,next){
+    console.log(req.params);
     if(req.isAuthenticated()){
 
         Comment.findById( req.params.commentID)
         .then( (foundComment) => {
             
-            if( foundComment.author.id.equals(req.user._id) ){
+            if( foundComment.author.id.equals(req.user._id) || req.user.isAdmin){
                 next();
             }
             else{

@@ -271,8 +271,21 @@ FACING A LOT OF ISSUES WRT FORM DATA HANDLING -LEARN THORUGHLY:
 
 ///////////////// SECTION 8 - OTHER MISC STUFF   ////////////////////
 
-8.1 Adding a date of creation for campgrounds & comments using Moment-Timezone 
+8.1 ADDING A DATE OF CREATION for campgrounds & comments using Moment-Timezone 
    - Change schema of campground & user; add a createdAt field with type as Date & default value as Date.now 
    - npm install moment-timezone();  
    - Inside app.js use ` app.locals.moment_tz = require('moment-timezone');  `
    - Inside the show.ejs type `moment(x.createdAt).tz("Asia/Kolkata").format('DD MMM YYYY, hh:mm a')` where x = comment or camp 
+
+8.2 ADMIN User roles
+    - Add an isAdmin field to the user schema
+    - The person while signing up while have an optional field to type a secret code (which is handed out only to admins). If the secret code matches, isAdmin field set to true and the status of the user is indicated in nav-bar (Admin vs Non-admin). 
+    - An admin can delete comments & campgrounds (but not edit it).
+    - Go to show page, add the condition `else if (currentUser && currentUser.isAdmin)` and display delete campground button alone if the condition satisfied. Do similarly for comments.
+    - in the middlewares of campgroundRoutes and commentRoutes files, if current logged in user == author or i current logged user is an admin then execute next()
+
+
+8.3 Google MAPS API to each campground
+    - Essentially we are going to make the campground owner add a location (or an address) while creating a campground and it will be displayed on the map.
+
+    - 
