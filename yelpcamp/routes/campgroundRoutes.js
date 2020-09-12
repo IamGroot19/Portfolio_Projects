@@ -1,8 +1,10 @@
 ///////////////////  ALL CAMPGROUNDS RELATED ROUTES IN THIS FILE //////////////////////
+
 let router = require('express').Router();
 const { request } = require('express');
 let Campground = require('../db/campgrounds');
 let Comment = require('../db/comment');
+
 
 // INDEX route
 router.get("/", (req,res) => {
@@ -27,7 +29,7 @@ router.post('/', isLoggedIn,  (req,res) => {
     let campgrd = { name: name, image: image, description:desc, author:author };
     Campground.create(campgrd)
         .then( (newlyCreatedCamp) => {
-            console.log(campgrd);
+           // console.log(campgrd);
         })
         .catch( (err) => {
             return console.log(err);
@@ -51,7 +53,7 @@ router.get("/:id", (req,res)=>{
             
             if(err){ console.log(err); }
             else{
-               // console.log(camp);
+                //console.log(camp);
                 res.render( "campgrounds/show.ejs", {camp:camp});     
             }
         }); 
