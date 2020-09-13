@@ -296,9 +296,16 @@ FACING A LOT OF ISSUES WRT FORM DATA HANDLING -LEARN THORUGHLY:
     - Modify commentSchema to include a rating field of type Number
     - Extract the rating value from the form in comment routes (CREATE/EDIT routes).
     - Display the rating in show.ejs
+    
+8.7 PASSWORD RESET FEATURE
+    - Modify the userSchema with following changes:
+        * Add a `unique:true` condition to the username & email fields.
+    - Add new routehandlers in the indexRoutes.js for GET '/users/:userID/password/reset' and POST '/users/:userID/password' 
+    - Add a 'pwdReset.ejs' template to fill in new password.
 
-8.5 PASSWORD RESET
-    -  
+8.8 FORGOT PASSWORD FEATURE
+
+
 
 
 8.7 Google MAPS API to each campground

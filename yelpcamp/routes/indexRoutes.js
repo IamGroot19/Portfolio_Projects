@@ -63,6 +63,7 @@ router.post('/login',
         (req,res) =>{ } //callback useless here since middleware takes care of everything - including redirect
 );
 
+// Display Profile Page (SHOW route type)
 router.get("/users/:userID", (req,res)=>{
     User.findById(req.params.userID, (err, foundUser) =>{
         if(err){
@@ -81,7 +82,30 @@ router.get('/logout', (req,res)=>{
     res.redirect("/campgrounds");
 });
 
+// Password reset  (EDIT route)
+router.get('/users/:userID/password/reset', (req,res) =>{
+    User.findById( req.params.userID, (err, foundUser) =>{
+        res.render('pwdReset.ejs', {user: foundUser}); 
+    });
+});
 
+// Password reset (UPDATE route) 
+router.post('/users/:userID/password', (req,res) =>{
+    User.findById(req.params.userID, (err,foundUser) =>{
+        
+        if(err){ throw err; res.status(500).json({'message':"user doesnt exist"}); }
+        else{
+            foundUser.setPassword( req.body.newPassword, () =>{
+                foundUser.save();
+                req.flash("success", "Password changed successfully");
+                res.redirect('/users/' + foundUser._id); //their profile page
+            });
+        }
+    });
+});
+
+
+// 
 function isLoggedIn(req,res,next){
 
     if(req.isAuthenticated()){

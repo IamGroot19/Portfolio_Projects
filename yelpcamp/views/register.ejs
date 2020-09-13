@@ -4,13 +4,13 @@
 <div class="container text-center">
     <h1> SIGN UP </h1>
     <form action="/register" method="POST">
-            FIRSTNAME <input type="text" name="firstname" placeholder="firstname">  <br> <br>
+            FIRSTNAME <input type="text" name="firstname" placeholder="firstname" required="true">  <br> <br>
             LASTNAME  <input type="text" name="lastname" placeholder="lastname">  <br> <br>    
-            USERNAME  <input type="text" name="username" placeholder="username">  <br> <br>
-            PASSWORD  <input type="password" name="password" placeholder="password"> <br> <br>
+            USERNAME  <input type="text" name="username" placeholder="username" required="true">  <br> <br>
+            PASSWORD  <input type="password" name="password" placeholder="password"required="true"> <br> <br>
             ADMINCODE <input type="text" name="admincode" placeholder="admincode"> <br> <br> 
             AVATAR    <input type="text" name="avatar" placeholder="profile picture url"> <br> <br>
-            EMAIL     <input type="email" name="email" placeholder="johndoe@example.com" > <br> <br>
+            EMAIL     <input type="email" name="email" placeholder="johndoe@example.com" required="true"> <br> <br>
             SHORT BIO <input type="text" name="bio" rows=4 placeholder="Short bio about yourself"> <br> <br>
             <button> Signup </button> 
     </form>
