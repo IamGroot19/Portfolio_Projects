@@ -290,9 +290,18 @@ FACING A LOT OF ISSUES WRT FORM DATA HANDLING -LEARN THORUGHLY:
     - Modify '/register' in indexRoutes.js to extract those data from the form
     - Create a 'user.ejs' profile page where people can see details about a user.
     - In the campground's page, hyperlink the user's username (both campground owner & comment authors) to their profile picture.
-    - 
 
-8.3 Google MAPS API to each campground
+8.6 RATINGS SYSTEM
+    - Modify editComment.js & newComment.js to include rating input (0:0.5:5)
+    - Modify commentSchema to include a rating field of type Number
+    - Extract the rating value from the form in comment routes (CREATE/EDIT routes).
+    - Display the rating in show.ejs
+
+8.5 PASSWORD RESET
+    -  
+
+
+8.7 Google MAPS API to each campground
     - Essentially we are going to make the campground owner add a location (or an address) while creating a campground and it will be displayed on the map.
 
     - 

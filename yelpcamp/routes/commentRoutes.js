@@ -28,7 +28,7 @@ router.post( "/", isLoggedIn, (req,res) => {
         else{
             //console.log(req.body.commentAuthor, req.body.commentText);
             
-            Comment.create( { text:req.body.commentText } )
+            Comment.create( { text:req.body.commentText, rating:req.body.ratingValue } )
                 .then( (savedComment) => {
 
                     // you could have also referenced it from user collections but since you'd have load lot of comments lot of times, it'd be faster to save user data in the comment Schema also. Ik this is not a case for strong DB consistency but then it's assumed that username & their userid is never going to change (unless it is deleted in which case their comments will also be deleted).
@@ -71,7 +71,7 @@ router.get('/:commentID/edit', isCommentOwnerOrAdmin, (req,res) =>{
 router.put('/:commentID', isCommentOwnerOrAdmin, (req,res) =>{
 
     Comment.findByIdAndUpdate( req.params.commentID, 
-        { text:req.body.commentText },
+        { text:req.body.commentText, rating: req.body.ratingValue },
         (err,foundComment) =>{
             if(err){ 
                 req.flash("error", "There was a problem in updating your comment"); 

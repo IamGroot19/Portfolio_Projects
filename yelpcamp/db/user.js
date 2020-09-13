@@ -3,12 +3,12 @@ let passportLocalMongoose = require('passport-local-mongoose');
 
 
 let UserSchema = new mongoose.Schema({
-    username: String,
+    username: { type: String, unique:true },
     password: String,
     avatar: { type:String, default: "https://www.redditstatic.com/avatars/avatar_default_02_A5A4A4.png"},
     firstName: String,
     lastName: String,
-    email: String,
+    email: {  type: String,  unique: true },
     bio: String,
     isAdmin: { type: Boolean, default: false} 
 });
