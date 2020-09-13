@@ -3,11 +3,15 @@
     width:100%;
 }
 
-.figure img{
+.figure{
     width: 100%;
     padding:0;
 }
 
+.figure-img{
+    width: 100%;
+    padding: 0;
+}
 .img-thumbnail{
     padding:0;
 }
@@ -19,7 +23,6 @@
 #profilepage{
     display: inline;
 }
-
 
 
 .figure-caption{

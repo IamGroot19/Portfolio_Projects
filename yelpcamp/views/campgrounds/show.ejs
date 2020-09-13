@@ -19,8 +19,12 @@
                 <img class="figure-img img-fluid" src="<%= camp.image %>" alt="Campground's Photo">
                 <div class="figure-caption">
                     <br>
+                    <% let avgRating = 0; %>
+                    <% camp.comments.forEach( (comment) => { avgRating+=comment.rating }); %>
+                    <% avgRating = avgRating/camp.comments.length; %>   
+
                     <h4 class="float-right"> <%= camp.price %> </h4>
-                    <h4> <a href="" > <%= camp.name %> </a> </h4>
+                    <h4> <a href="" > <%= camp.name %> </a> | <span style="display: inline; font-size:medium"> AVERAGE RATING : <%= avgRating %> </span> </h4>
                     <p> <%= camp.description %> </p>
                     
                     <p> <em> Written by <a href="/users/<%= camp.author.id%>" > <%= camp.author.username %> </a> on <%= moment(camp.createdAt).tz("Asia/Kolkata").format('DD MMM YYYY') %> </em> </p>
