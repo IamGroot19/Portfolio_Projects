@@ -367,3 +367,12 @@ GOAL: Essentially we are going to make the campground owner add a location (or a
     - But if you want it to persist even after closing the terminal use the 'dotenv' package. 
     - To use dotenv, at earliest line in app.js include :`require('dotenv').config()
     - NEVER COMMIT .env FILES TO GIT. ADD IT TO .gitignore files ; Also take care to configure the deployment environemnt & add these keys there for app features to work
+
+9.3 Adding map in show.ejs
+    - Create a div element with id='map'.
+    - Write a script in the same show.ejs file which renders the map inside the div by DOM manipulation.
+    - In main.css file,  assign dimensions to the div element else it wont display the map
+
+9.4 UPDATE CAMPGROUND Schema
+    - Add the variables 'lat', 'lon' of type Number ad 'location' of type String
+    

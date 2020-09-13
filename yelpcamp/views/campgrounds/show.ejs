@@ -11,8 +11,7 @@
                 <li class="list-group-item">Info 1</li>
                 <li class="list-group-item">Info 1</li>
             </div>    
-            <!-- The scripts written below access this element having id as map and render a map inside this-->
-            <div id="map"> </div>
+            <div id='map'></div>
         </div>
 
         <!-- Main place for Pics, desc, Reviews -->
@@ -89,8 +88,6 @@
 
 
 
-
-
 <script>
     function initMap(){
         let lat = camp.lat;
@@ -107,5 +104,6 @@
     }
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZHXSyoXAaUHyum245LTzjBWmtBhY4zSU&callback=initMap" type="text/javascript"></script>
+
 
 <%- include('../partials/footer.ejs') %>
