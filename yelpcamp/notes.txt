@@ -318,8 +318,6 @@ FACING A LOT OF ISSUES WRT FORM DATA HANDLING -LEARN THORUGHLY:
         
         # The reset link will be something like: 'http://localhost:6969/forgot/reset/:tokenID' . The token from URL can be picked up from req.params.tokenID and the link itself should have a GET route handler. 
 
-    -
-
     - Issues faced:
         - done() not a function. Thta's because i had a stupid 'async' erm infront of one of the waterfallfunctions.
         - donot use arrw syntax inside the async.waterfall
@@ -339,9 +337,7 @@ FACING A LOT OF ISSUES WRT FORM DATA HANDLING -LEARN THORUGHLY:
     ########################################################################
 
 
+========= All developments till now have been put in the branch version11_yelpcamp ================
 
 
-8.7 Google MAPS API to each campground
-    - Essentially we are going to make the campground owner add a location (or an address) while creating a campground and it will be displayed on the map.
-
-    - 
+ 
