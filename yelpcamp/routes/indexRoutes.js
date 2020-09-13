@@ -1,8 +1,13 @@
 ////////////  ALL PRIMARY (index) ROUTES CAN BE FOUND HERE //////////////////
 
 let router = require('express').Router();
+const nodemon = require('nodemon');
 let passport = require('passport'); 
+const user = require('../db/user');
 let User = require('../db/user');
+const async = require('async');
+const crypto = require('crypto');
+const nodemailer = require('nodemailer'); 
 
 // homepage
 router.get("/", (req,res) => {
@@ -38,7 +43,7 @@ router.post("/register", (req,res)=>{
         // once a user has signed up, we log them in, authenticate them and redirect them to campgrounds page once logged in. If
         passport.authenticate("local")(req, res, ()=>{
             if(user.isAdmin){
-                req.flash("success", "Welcome to YelpCamp "+ user.username + ".You are also an Admin");
+                req.flash("success", "Welcome to YelpCamp "+ user.username + ".You are also an Admin.");
             }
             else{
                 req.flash("success", "Welcome to YelpCamp "+ user.username );
@@ -63,6 +68,14 @@ router.post('/login',
         (req,res) =>{ } //callback useless here since middleware takes care of everything - including redirect
 );
 
+// Log out route
+router.get('/logout', (req,res)=>{
+
+    req.logout(); //This comes from the passport-local-mongoose methods added to UserSchema
+    req.flash("success", "Logged you out!");
+    res.redirect("/campgrounds");
+});
+
 // Display Profile Page (SHOW route type)
 router.get("/users/:userID", (req,res)=>{
     User.findById(req.params.userID, (err, foundUser) =>{
@@ -74,38 +87,6 @@ router.get("/users/:userID", (req,res)=>{
     });
 });
 
-// Log out route
-router.get('/logout', (req,res)=>{
-
-    req.logout(); //This comes from the passport-local-mongoose methods added to UserSchema
-    req.flash("success", "Logged you out!");
-    res.redirect("/campgrounds");
-});
-
-// Password reset  (EDIT route)
-router.get('/users/:userID/password/reset', (req,res) =>{
-    User.findById( req.params.userID, (err, foundUser) =>{
-        res.render('pwdReset.ejs', {user: foundUser}); 
-    });
-});
-
-// Password reset (UPDATE route) 
-router.post('/users/:userID/password', (req,res) =>{
-    User.findById(req.params.userID, (err,foundUser) =>{
-        
-        if(err){ throw err; res.status(500).json({'message':"user doesnt exist"}); }
-        else{
-            foundUser.setPassword( req.body.newPassword, () =>{
-                foundUser.save();
-                req.flash("success", "Password changed successfully");
-                res.redirect('/users/' + foundUser._id); //their profile page
-            });
-        }
-    });
-});
-
-
-// 
 function isLoggedIn(req,res,next){
 
     if(req.isAuthenticated()){

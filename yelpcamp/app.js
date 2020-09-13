@@ -6,6 +6,9 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const expressSession = require('express-session');
 const methodOverride = require('method-override');
+let nodemailer = require('nodemailer');
+let async = require('async');
+let crypto = require('crypto'); // it's a part of node, no need to separately install.
 
 const User = require('./db/user');
 const seedDB = require('./seeds');
@@ -15,6 +18,7 @@ const Comment = require('./db/comment.js');
 const campgroundRoutes = require('./routes/campgroundRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 const indexRoutes = require('./routes/indexRoutes');
+const credentialRoutes = require('./routes/credentialRoutes');
 
 mongoose.connect("mongodb://localhost/yelpCamp_db",  
                 { useNewUrlParser: true, useUnifiedTopology: true }, 
@@ -71,7 +75,7 @@ app.use( (req,res,next) => {
 app.use( '/', indexRoutes);
 app.use( '/campgrounds', campgroundRoutes);
 app.use( '/campgrounds/:id/comments', commentRoutes);
-
+app.use('/', credentialRoutes); 
 /////////////  END OF ROUTING //////////
 
 PORT = process.env.PORT || 6969; 

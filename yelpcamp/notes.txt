@@ -303,7 +303,40 @@ FACING A LOT OF ISSUES WRT FORM DATA HANDLING -LEARN THORUGHLY:
     - Add new routehandlers in the indexRoutes.js for GET '/users/:userID/password/reset' and POST '/users/:userID/password' 
     - Add a 'pwdReset.ejs' template to fill in new password.
 
-8.8 FORGOT PASSWORD FEATURE
+8.8 FORGOT PASSWORD FEATURE (using nodemailer)
+    - Install nodemailer (a nodejs package to send emails).
+    - Create a 'forgotPwd.ejs' template for user to enter their registered email id to get a reset link
+    - Create route handlers for GET '/forgot' and POST '/forgot'.
+    - async.waterfall([fun1, fun2 ...]) calls an array of functions one after another. 
+    - Inside  the POST route handler, set up an async.waterfall() to execute flg:
+
+        # In the 1st function, a token(hexadecimal string) is created with the help of crypto.randomBytes(). 
+        
+        # Inside 2nd waterfall fn, Then you set the `resetpasswordToken` attrbute in the user object to this token, set expiry as 1 hr, save the user object. Call the next waterfall function & pass the token to it.
+
+        # Inside 3rd waterfall fn, we use nodemailer package. Create a transport object with details about the sender email. In this case, we have service as 'Gmail' (you have alternatives like Sendgrid etc), an auth object containing your email ID and password. Next create an 'emailDetails' object containing email details(sender,receiver, ,subject, etc..) and put the reset link inside this 'emailDetails'. Execute the sendEmail() method ofthe transport object with the 'emailDetails' object as input.
+        
+        # The reset link will be something like: 'http://localhost:6969/forgot/reset/:tokenID' . The token from URL can be picked up from req.params.tokenID and the link itself should have a GET route handler. 
+
+    -
+
+    - Issues faced:
+        - done() not a function. Thta's because i had a stupid 'async' erm infront of one of the waterfallfunctions.
+        - donot use arrw syntax inside the async.waterfall
+        - bad credentials error - turns out there was a typo in emailname
+        - Inside gmail set less secure apps access=ON
+
+     ######### BRIEF NOTE ABOUT 'done()' and 'async.waterfall( [..], mainCallback)' #############33
+
+         NOTE: The done you see inside each function's parameter list is a calback function. Since nodejs is asynchronous, inorder to ensure that certain activities are carried in synchronous nature(i.e in cetain order), we pass a callback called 'done' that is executed when the function finishes it's activity. For ex, in this 2nd waterfall function, you pass a 'done' callback which is executed only after the save() has fully finished executing. 
+            Refer:
+                https://stackoverflow.com/questions/28656780/what-is-the-attribute-done-in-nodejs
+	        	https://stackoverflow.com/questions/37646949/what-is-the-point-of-the-done-callback
+	
+         Async Waterfall:  This waterfall method runs all the functions(i.e. tasks) one by one and passes the result of the first function to the second, second function’s result to the third, and so on. When one function passes the error to its own callback, then the next functions are not executed. So, the 'mainCallback' is immediately called with the error.
+         Refer: "https://www.geeksforgeeks.org/what-is-the-difference-between-async-waterfall-and-async-series/#:~:text=waterfall%3A%20This%20waterfall%20method%20runs,next%20functions%20are%20not%20executed"
+
+    ########################################################################
 
 
 
