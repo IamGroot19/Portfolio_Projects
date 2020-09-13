@@ -315,14 +315,24 @@ FACING A LOT OF ISSUES WRT FORM DATA HANDLING -LEARN THORUGHLY:
         # Inside 2nd waterfall fn, Then you set the `resetpasswordToken` attrbute in the user object to this token, set expiry as 1 hr, save the user object. Call the next waterfall function & pass the token to it.
 
         # Inside 3rd waterfall fn, we use nodemailer package. Create a transport object with details about the sender email. In this case, we have service as 'Gmail' (you have alternatives like Sendgrid etc), an auth object containing your email ID and password. Next create an 'emailDetails' object containing email details(sender,receiver, ,subject, etc..) and put the reset link inside this 'emailDetails'. Execute the sendEmail() method ofthe transport object with the 'emailDetails' object as input.
+
+        # Inside credentialRoutes.js file dont type your gmail password directly for security concerns (instead export it to process.env.GMAILPW ). 
+        [type this code in terminal: ` export process.env.GMAILPW=your_gmail_pwd_here` ]
         
         # The reset link will be something like: 'http://localhost:6969/forgot/reset/:tokenID' . The token from URL can be picked up from req.params.tokenID and the link itself should have a GET route handler. 
 
-    - Issues faced:
-        - done() not a function. Thta's because i had a stupid 'async' erm infront of one of the waterfallfunctions.
+8.9 FORGOT PASSWORD FEATURE (part2)
+
+    - Setup a GET routehandler whose URL is same as the token-embedded URL sent to user's email.
+    - Render a 'pwdForgotReset.ejs' template that asks user to enter new password. Before rendering the template, ensure that the route handler checks whether token has expired or not.
+    - The forms data is sent as a POST request whose route handler pushes it to the user's object, invalidates the tokens, redirects them to a login page & then flashes a success message. (Inbetween if an error occur, redirection & flash notifs are to be setup accordingly.
+
+    Issues faced:
+        - done() not a function. Thta's because i had a stupid 'async' term infront of one of the waterfallfunctions.
         - donot use arrw syntax inside the async.waterfall
         - bad credentials error - turns out there was a typo in emailname
         - Inside gmail set less secure apps access=ON
+
 
      ######### BRIEF NOTE ABOUT 'done()' and 'async.waterfall( [..], mainCallback)' #############33
 
@@ -339,5 +349,21 @@ FACING A LOT OF ISSUES WRT FORM DATA HANDLING -LEARN THORUGHLY:
 
 ========= All developments till now have been put in the branch version11_yelpcamp ================
 
+//////////////// SECTion 9 - GOOGLE MAPS API /////////////////////////////
 
- 
+GOAL: Essentially we are going to make the campground owner add a location (or an address) while creating a campground and it will be displayed on the map.
+
+9.1 SETTING UP AN ACCOUNT
+    -  Go to maps, create a project, biling account, add list of required APIs, setup budget. 
+    - Get the Google Maps API key. 
+    - Ensure Restricted access to the API Key (once deployed on beanstalk, put the beanstalk IP in the restricted IP address' column)
+    - Get another API Key for Geocoding API. (& ofcourse enable restrictions for this also)
+    
+9.2 Add key to application a ENV variable:
+    
+    - You have created 2 keys now: a) CLIENTSIDE_KEY_withRestriction  b) GEOCODER_API_KEY_noRestriction
+    - CLIENTSIDE_KEY_withRestriction will be exposed in the client side (but will have IP address restrictions so can't be misused) while the other one wont have restriction (but will be strongly protected by storingit in env). There are 2 methods to store in env. 
+    - Direct & obvious way is to type in terminal: `export process.env.GEOCODING_API_KEY=your_api_key`
+    - But if you want it to persist even after closing the terminal use the 'dotenv' package. 
+    - To use dotenv, at earliest line in app.js include :`require('dotenv').config()
+    - NEVER COMMIT .env FILES TO GIT. ADD IT TO .gitignore files ; Also take care to configure the deployment environemnt & add these keys there for app features to work
