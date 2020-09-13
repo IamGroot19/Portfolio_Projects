@@ -115,4 +115,57 @@ router.post('/forgot', (req,res, next) => {
 }); // end of the POST '/forgot'  route handler
 
 
+// Forgot password (EDIT route, part c, type new password)
+router.get('/reset/:idToken/', (req, res) => {
+
+    User.findOne( { resetPasswordToken: req.params.idToken,
+                    resetPasswordExpires: { $gt: Date.now() }
+                  }, 
+                  (err, foundUser)=>{
+                    // if toekn has been tampered  
+                    if(err || !foundUser) {
+                        req.flash("error", "Reset Link is invalid or has expired. Please try again.");
+                        return res.redirect('/forgot');
+                    }
+                    if( foundUser){
+                        res.render('pwdForgotReset.ejs', {user:foundUser});
+                    }
+                });
+
+});
+
+// Forgot password (UPDATE route - fetch the new password & update the db)
+router.post('/reset/:userID', (req,res)=>{
+
+    User.findById(req.params.userID, (err, foundUser)=>{
+    
+        if(err){
+            req.flash('error', 'Cant fetch account ID from databse');
+            return res.redirect('/forgot');
+         }
+        else{
+            foundUser.setPassword( req.body.newPassword, () =>{
+                // invalidate token once password is reset
+                foundUser.resetPasswordExpires = undefined;
+                foundUser.resetPasswordToken = undefined; 
+
+                foundUser.save( (err, savedUser) =>{
+                     /*if(err){ console.log(err); } */
+                    req.flash("success", "Password changed successfully");
+                    
+                    res.redirect('/login');
+                   
+                    /* req.logIn( savedUser, (err)=>{
+                        if(err)
+                        {    console.log(err); req.flash('error', err.message); }
+                    }); */
+                });
+            });
+        }
+    
+
+
+    })
+});
+
 module.exports = router; 
