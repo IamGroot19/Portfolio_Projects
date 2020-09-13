@@ -59,7 +59,7 @@ router.get('/:commentID/edit', isCommentOwnerOrAdmin, (req,res) =>{
         
         if(err){ 
             req.flash("error", "There was a problem in fetching comments");    
-            res.redirect("back"); 
+            res.redirect("/campgrounds/" + req.params.id); 
         }
         res.render("comments/editComment.ejs", {campID: req.params.id, comment: foundComment});
     

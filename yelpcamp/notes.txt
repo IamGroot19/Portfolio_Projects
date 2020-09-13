@@ -284,6 +284,13 @@ FACING A LOT OF ISSUES WRT FORM DATA HANDLING -LEARN THORUGHLY:
     - Go to show page, add the condition `else if (currentUser && currentUser.isAdmin)` and display delete campground button alone if the condition satisfied. Do similarly for comments.
     - in the middlewares of campgroundRoutes and commentRoutes files, if current logged in user == author or i current logged user is an admin then execute next()
 
+8.4 USER PROFILE IMPLEMENTATION 
+    - Include flg fields in the UserSchema: avatar (string, url for image), firstname, lastname, email, bio.
+    - Modify register.ejs to input those data.
+    - Modify '/register' in indexRoutes.js to extract those data from the form
+    - Create a 'user.ejs' profile page where people can see details about a user.
+    - In the campground's page, hyperlink the user's username (both campground owner & comment authors) to their profile picture.
+    - 
 
 8.3 Google MAPS API to each campground
     - Essentially we are going to make the campground owner add a location (or an address) while creating a campground and it will be displayed on the map.

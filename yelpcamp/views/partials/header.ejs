@@ -35,7 +35,7 @@
                 <%} else{ %>
 
                     <li class="nav-item"> 
-                        <a href="#" class="nav-link"> Signed In as <%= currentUser.username %> </a> 
+                        <a href="/users/<%= currentUser.id%>" class="nav-link"> Signed In as <%= currentUser.username %> </a>
                     </li>
                     <li>
                         <% if(currentUser.isAdmin){ %>

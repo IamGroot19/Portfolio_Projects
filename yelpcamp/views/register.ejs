@@ -4,13 +4,47 @@
 <div class="container text-center">
     <h1> SIGN UP </h1>
     <form action="/register" method="POST">
+            FIRSTNAME <input type="text" name="firstname" placeholder="firstname">  <br> <br>
+            LASTNAME  <input type="text" name="lastname" placeholder="lastname">  <br> <br>    
             USERNAME  <input type="text" name="username" placeholder="username">  <br> <br>
             PASSWORD  <input type="password" name="password" placeholder="password"> <br> <br>
             ADMINCODE <input type="text" name="admincode" placeholder="admincode"> <br> <br> 
+            AVATAR    <input type="text" name="avatar" placeholder="profile picture url"> <br> <br>
+            EMAIL     <input type="email" name="email" placeholder="johndoe@example.com" > <br> <br>
+            SHORT BIO <input type="text" name="bio" rows=4 placeholder="Short bio about yourself"> <br> <br>
             <button> Signup </button> 
     </form>
 </div>
 
+<!-- CHANGE THE SIGNUP FORM TO BETTER BOOTSTRAP VERSION WHEN YOU HAVE TIME 
+    <div class="container">
+    <h1 style="margin-left: 7.5em; margin-block-start: 2em ;"> Create New Campgrounds </h1><br><br>
+    
+        <form action="/campgrounds" method="POST">
+            <div style=" width:60%; margin: 0 auto;">
+                <div class="form-group">
+                    <label for="campName"> Camp Name </label>
+                    <input type="text" class="form-control" placeholder="Camp's Name" id="campName" name='campName'>
+                </div>
+                <div class="form-group">
+                    <label for="campImg"> Camp Image </label>
+                    <input type="text" class="form-control" placeholder="Camp Image URL" name='campImg' id="campImg">
+                </div>
+                <div class="form-group">
+                    <label for="campDesc"> Camp Description </label>
+                    <textarea type="text" class="form-control"  rows=4 placeholder="Describe the camp!" rows=3 name='description'></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="campDesc"> Approximate Charges </label>
+                    <input type="text" class="form-control"  placeholder="Approx price for 2 or 4 people, per session" name='campPrice' value="Rs ">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                <br> 
+                <p style="margin: 0 auto;" class="text-center"> <a href="/campgrounds">Go Back</a> <p>
+            </div>
+        </form>    
+</div>
+-->
 <div style="margin:4em;">
     <h3> IMPORTANT NOTE: </h3>
     <ul> <h5>

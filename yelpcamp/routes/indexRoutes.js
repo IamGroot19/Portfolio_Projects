@@ -2,7 +2,6 @@
 
 let router = require('express').Router();
 let passport = require('passport'); 
-
 let User = require('../db/user');
 
 // homepage
@@ -18,7 +17,15 @@ router.get( '/register', (req,res)=>{
 // Handle signup logic
 router.post("/register", (req,res)=>{
     
-    let newUser = new User({ username: req.body.username});
+    let newUser = new User({ 
+        username: req.body.username, 
+        firstName: req.body.firstname, 
+        lastName: req.body.lastname, 
+        avatar: req.body.avatar, 
+        email: req.body.email,
+        bio: req.body.bio 
+    });
+
     if(req.body.admincode == 'secretADMINcode'){
         newUser.isAdmin = true;
     }
@@ -55,6 +62,16 @@ router.post('/login',
             }), 
         (req,res) =>{ } //callback useless here since middleware takes care of everything - including redirect
 );
+
+router.get("/users/:userID", (req,res)=>{
+    User.findById(req.params.userID, (err, foundUser) =>{
+        if(err){
+            req.flash("error", "There was a problem in fetching profile");    
+            res.redirect("/campgrounds" + req.params.id); 
+        }
+        res.render("users.ejs", {user:foundUser} );
+    });
+});
 
 // Log out route
 router.get('/logout', (req,res)=>{
