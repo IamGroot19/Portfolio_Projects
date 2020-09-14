@@ -55,7 +55,7 @@ router.post('/', isLoggedIn,  (req,res) => {
 
         Campground.create(campgrd)
         .then( (newlyCreatedCamp) => {
-            console.log(campgrd);
+            //console.log(campgrd);
         })
         .catch( (err) => {
             return console.log(err);
