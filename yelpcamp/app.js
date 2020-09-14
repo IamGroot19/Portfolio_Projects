@@ -7,10 +7,12 @@ let flash = require('connect-flash');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const expressSession = require('express-session');
+
 const methodOverride = require('method-override');
 let nodemailer = require('nodemailer');
 let async = require('async');
 let crypto = require('crypto'); // it's a part of node, no need to separately install.
+
 
 const User = require('./db/user');
 const seedDB = require('./seeds');
@@ -72,6 +74,8 @@ app.use( (req,res,next) => {
     res.locals.error = req.flash("error");
     next(); //without this it will just stop and wont go to the route
 });
+
+
 
 // Importing router from routes file
 app.use( '/', indexRoutes);

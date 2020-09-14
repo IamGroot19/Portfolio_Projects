@@ -375,4 +375,17 @@ GOAL: Essentially we are going to make the campground owner add a location (or a
 
 9.4 UPDATE CAMPGROUND Schema
     - Add the variables 'lat', 'lon' of type Number ad 'location' of type String
+
+9.5 UPDATE NEW & EDIT CAMPGROUNDS forms
+    - Update the templates
+    - Install Node-geocoder for geocoding the location into lat-lon. (btw, Geocoding is the process of transforming a description of a location—such as a pair of coordinates, an address, or a name of a place—to a location on the earth's surface. You can geocode by entering one location description at a time or by providing many of them at once in a table.)
+    - In the app.js before you include routes files, you need to mention some configurations for the geocoder package (like who is the servic provider that would do geocoding for, th API KEY of that service provider etc...)
+    - In the POST/PUT routehandlers extract the new variables and save them to db.
     
+NOTE: 
+TOOK ME # FUCKING HOURS TO FIGURE THIS OUT 
+You have to use <%- JSON.stringiy(camp.id) %> inorder to use ejs template values in side the <script> </script>
+    https://stackoverflow.com/a/19995644/5777021
+
+Few other helpful liks:
+https://stackoverflow.com/questions/20585055/how-to-fix-uncaught-invalidvalueerror-setposition-not-a-latlng-or-latlnglitera/20585117

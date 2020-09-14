@@ -5,12 +5,12 @@
 
         <!-- Side bar for map & other data -->
         <div class="col-md-3">
-            <p class="lead">YelpCamp</p>
+            <p class="lead">Dining Options</p>
             <div class"list-group">
                 <li class="list-group-item active">Info 1</li>
                 <li class="list-group-item">Info 1</li>
-                <li class="list-group-item">Info 1</li>
             </div>    
+            <br><br>
             <div id='map'></div>
         </div>
 
@@ -24,7 +24,7 @@
                     <% camp.comments.forEach( (comment) => { avgRating+=comment.rating }); %>
                     <% avgRating = avgRating/camp.comments.length; %>   
 
-                    <h4 class="float-right"> <%= camp.price %> </h4>
+                    <h4 class="float-right"> Rs. <%= camp.price %> <span style="display: inline; font-size:small"> (per 2 people per meal) </span> </h4>
                     <h4> <a href="" > <%= camp.name %> </a> | <span style="display: inline; font-size:medium"> AVERAGE RATING : <%= avgRating %> </span> </h4>
                     <p> <%= camp.description %> </p>
                     
@@ -86,24 +86,35 @@
     </div>
 </div>
 
-
-
 <script>
-    function initMap(){
-        let lat = camp.lat;
-        let lon = camp.lon;
-        let center = {lat:lat, lon:lon};
-        let map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 8,
-            center: center,
-            scrollwheel: false
-        });
-        let contentString = `<strong> <%= camp.name %></strong><p><%=camp.description %> </p>`;
-        let infowindow = new google.maps.InfoWindow( {content: contentString} );
-        let marker = new google.maps.Marker( {position:center, map:map} );
-    }
+function initMap() {
+    //console.log("print something  ");
+    //console.log('inside maps show: ', '<%- JSON.stringify(camp) %>'); 
+    var lat =  parseFloat('<%- JSON.stringify(camp.lat) %>' );
+    var lng =  parseFloat('<%- JSON.stringify( camp.lon) %>'); 
+   
+    // useless stuff: var centerr = {lat: lat, lon: lng};
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 8,
+        center: new google.maps.LatLng(lat, lng),
+        scrollwheel: false
+    });
+    var contentString = `<strong><%- JSON.parse(JSON.stringify(camp.name))%>-<% JSON.parse(JSON.stringify(camp.location))%></strong> <p><%- JSON.parse(JSON.stringify(camp.description)) %></p> `
+
+    console.log(contentString);
+    var infowindow = new google.maps.InfoWindow({
+        content: contentString
+    });
+    var marker = new google.maps.Marker({
+        position: new google.maps.LatLng(lat, lng),
+        map: map
+    });
+    marker.addListener('click', function() {
+        infowindow.open(map, marker);
+    });
+}
 </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZHXSyoXAaUHyum245LTzjBWmtBhY4zSU&callback=initMap" type="text/javascript"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQ8r5XqFQJBwMDxA7y9E4a-plIW8PjY24&callback=initMap"> </script>
 
-
-<%- include('../partials/footer.ejs') %>
+<%- include('../partials/footer') %>
+  
