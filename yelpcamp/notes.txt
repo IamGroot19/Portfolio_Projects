@@ -404,3 +404,26 @@ More Optimsations & Auhtorisations : BIG COMMIT (forgot to break it out into sma
     - USER ACCOUNTS CAN COMMENT ONLY ONCE PER POST
     - OPTIMISED THE WAY THE APP DETERMINES USER AUTHORISATION REGARDING COMMENTS
     - OPTIMISED THE WAY THE APP CALCULATES Avg RATINGS (with a cmntLoopFlag)
+
+///////////////   SECTION 12 - YELPCAMP TO FoodCravings Migration /////////////////////////
+
+I made all initial feature changes wrt yelpcamp itself to prevent confusion from variable names.
+Yelpcamp features are mostly completed and now I am migrating yelpcamp to 'FoodCravings' branch.
+
+FOR THE TIMEBING I HAVE DECIDED TO CHANGE THE UI ( & words visible to users alone. I dont have courage & time to change variables right now. So understand code by watching for equivalent words, campgrounds=restaurant, comment=review)
+
+12.1 UI changes
+    - Change landing.ejs, landing.css [ cover images(from nature scenes to restaurants), title etc..]
+    - Change partials/header.ejs (i.e Nav Bar & Title).
+    - Nothing to change about register.ejs
+    - Grammar & few wordings corrected in about.ejs
+    - In user.ejs, added a line for showing admin vs non-admin
+    - Made Login Page (login.ejs) better (include forgot password option)
+    - Change signup page (register.ejs) form to bootstrap forms.
+
+    - index.ejs: Change all camp related terms to restaurant related terms.
+    - newCamp.ejs, editCamp.ejs: Change all camp related terms to restaurant related terms.
+    - showCamp.ejs: Change all camp related terms to restaurant related terms (which is not much btw, a lot of camp related terms are a partof javascript code which iam not touching for the timebeing).
+    - editComment.ejs, newComment.ejs: Nothing to change literally.
+
+    - [ campgroundRoutes.js , commentRoutes.js ] - only change the flash messages, nothing els to change

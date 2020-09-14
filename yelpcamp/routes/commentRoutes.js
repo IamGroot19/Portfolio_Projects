@@ -10,7 +10,7 @@ const User = require('../db/user.js')
 router.get('/new', isLoggedIn,modCommentRestriction,  (req,res) => {
     
     Campground.findById( req.params.id, (err,camp) => {
-        if(err) { req.flash("error", "There was a problem in loading new comment's entry form")}
+        if(err) { req.flash("error", "There was a problem in loading the Review Entry Form")}
         else{
             res.render("../views/comments/newComment.ejs", {camp:camp});
         }
@@ -23,14 +23,14 @@ router.post( "/", isLoggedIn,modCommentRestriction, (req,res) => {
     let curUser = req.user;
     for( let i=0; i<curUser.reviewedCamps.length; i++){ 
         if( req.params.id == curUser.reviewedCamps[i]){
-            req.flash("error", "Only one review per user");
+            req.flash("error", "Only one review per user!");
             res.redirect('/campgrounds');
         }
     }
 
     Campground.findById(req.params.id, (err, camp) =>{
         if(err) {
-            req.flash("error", "There was a problem in fetching Campground from database");
+            req.flash("error", "There was a problem in fetching Restaurant from database.");
             res.redirect("/campgrounds");
         }
         else if( curUser._id === camp.author.id){
@@ -65,14 +65,14 @@ router.post( "/", isLoggedIn,modCommentRestriction, (req,res) => {
                             //console.log("post saved in user: ", savedUser);
                         })
                         .catch( (err) =>{
-                            console.log('Error saving reviewed camp in user: ', err);
+                            console.log('Error saving reviewed restaurant in user: ', err);
                         });
                     
                    // req.flash("success", "Comment Created Successfully")
                     res.redirect('/campgrounds/' + camp._id);
                 })
                 .catch( (err) => {
-                    req.flash("error", "There was a problem in creating your comment");
+                    req.flash("error", "There was a problem in creating your review");
                 });       
         }
     }); 
@@ -88,7 +88,7 @@ router.get('/:commentID/edit',isLoggedIn, modCommentRestriction, isCommentOwnerO
     Comment.findById(req.params.commentID, (err,foundComment) =>{
         
         if(err){ 
-            req.flash("error", "There was a problem in fetching comments");    
+            req.flash("error", "There was a problem in fetching your Review");    
             res.redirect("/campgrounds/" + req.params.id); 
         }
         res.render("comments/editComment.ejs", {campID: req.params.id, comment: foundComment});
@@ -104,7 +104,7 @@ router.put('/:commentID',modCommentRestriction, isCommentOwnerOrAdmin, (req,res)
         { text:req.body.commentText, rating: req.body.ratingValue },
         (err,foundComment) =>{
             if(err){ 
-                req.flash("error", "There was a problem in updating your comment"); 
+                req.flash("error", "There was a problem in updating your Review"); 
                 res.redirect('/campgrounds/' + req.params.id); }
             else{
               //  req.flash("success", "Comment Updated Successfully");
@@ -128,7 +128,7 @@ router.delete('/:commentID/delete', isCommentOwnerOrAdmin,  (req,res) =>{
     Comment.findByIdAndDelete(req.params.commentID, (err,deletedComm) =>{
         
         if(err){
-            req.flash("error", "There was a problem in deleting your comment");
+            req.flash("error", "There was a problem in deleting your review");
             res.redirect("/campgrounds/" + req.params.id);
         }
         //console.log('Comment deleted: ', deletedComm.text);
@@ -144,7 +144,7 @@ router.delete('/:commentID/delete', isCommentOwnerOrAdmin,  (req,res) =>{
 
                 curUser.save()
                     .then( () => {
-                        console.log("camp removed from user object's reviewedCampList"); 
+                        console.log("Restaurant removed from user object's reviewedRestaurantList"); 
 
                         //Also have to update the cmntLoopFlag since comment is deleted
                         Campground.findById(req.params.id, (err, foundCamp)=>{
@@ -156,7 +156,7 @@ router.delete('/:commentID/delete', isCommentOwnerOrAdmin,  (req,res) =>{
                         req.flash("success", "Review Deleted Successfully")
                         res.redirect("/campgrounds/" + req.params.id );
                     })
-                    .catch( (err) => { console.log("camp couldn't be removed from user obj: ", err); });
+                    .catch( (err) => { console.log("Restaurant couldn't be removed from user obj: ", err); });
             });
         } 
         else{     
@@ -169,9 +169,9 @@ router.delete('/:commentID/delete', isCommentOwnerOrAdmin,  (req,res) =>{
             }
             curUser.save()
                 .then( () => {
-                    console.log("camp removed from user object's reviewedCampList"); 
+                    console.log("Restaurant removed from user object's reviewedRestaurantList"); 
                 })
-                .catch( (err) => { console.log("camp couldn't be removed from user obj: ", err); });
+                .catch( (err) => { console.log("Restaurant couldn't be removed from user obj: ", err); });
             
             Campground.findById(req.params.id, (err, foundCamp)=>{
                 
@@ -198,7 +198,7 @@ function isCommentOwnerOrAdmin(req,res,next){
                 next();
             }
             else{
-                req.flash("error", "Comment can be edited only by the authors & can be deleted only by author/admin");
+                req.flash("error", "Restaurant can be edited only by the authors & can be deleted only by author/admin");
                 res.redirect('/campgrounds' + req.params.id);
             }
         })
@@ -208,7 +208,7 @@ function isCommentOwnerOrAdmin(req,res,next){
          });
     }
     else{
-        req.flash("error", "You need to be logged in to edit/delete comments!")
+        req.flash("error", "You need to be logged in to edit/delete a Review!")
         res.redirect('/login');
     }
     

@@ -30,6 +30,22 @@ router.get("/", (req,res) => {
 });
 
 
+// SHOW route
+router.get("/:id", isLoggedIn, (req,res)=>{
+
+    Campground.findById(req.params.id)
+        .populate("comments")
+        .exec( (err, camp) => {
+            
+            if(err){ req.flash("error", "There was a problem in fetching the Restaurant from database"); }
+            else{
+                //console.log('camp object insider: ' ,camp);
+                res.render( "campgrounds/show.ejs", {camp:camp});     
+            }
+        }); 
+});
+
+
 // NEW route
 router.get("/new", isLoggedIn, modCampRestriction, (req,res) => {
     
@@ -69,34 +85,19 @@ router.post('/', isLoggedIn, modCampRestriction, (req,res) => {
         .catch( (err) => {
             return console.log(err);
         });
-        req.flash("success", "Campground Created Successfully!!!")
+        req.flash("success", "Restaurant Created Successfully!!!")
         res.redirect("/campgrounds");
     }); // end of geocoder() 
 
 }); //end of routehandler
 
 
-// SHOW route
-router.get("/:id", isLoggedIn, (req,res)=>{
-
-    Campground.findById(req.params.id)
-        .populate("comments")
-        .exec( (err, camp) => {
-            
-            if(err){ req.flash("error", "There was a problem in fetching the Campground from database"); }
-            else{
-                //console.log('camp object insider: ' ,camp);
-                res.render( "campgrounds/show.ejs", {camp:camp});     
-            }
-        }); 
-});
-
 // EDIT campground
 router.get('/:id/edit',modCampRestriction, checkCampgrdOwner, (req,res) =>{
 
     Campground.findById(req.params.id, (err, camp) =>{
 
-        if(err) { req.flash("error", "Campground not found"); }
+        if(err) { req.flash("error", "Restaurant not found"); }
         res.render("./campgrounds/editCamp.ejs", {camp:camp});
     });
     
@@ -107,7 +108,7 @@ router.put("/:id", modCampRestriction, checkCampgrdOwner, (req,res) => {
     
     Geocoder.geocode( req.body.location, (err,data) => {
         if(err || !data.length){
-            req.flash('error', 'Invalid address');
+            req.flash('error', 'Invalid Address/Location');
             return res.redirect('/campgrounds/new');
         }
         let lat = data[0].latitude;
@@ -122,7 +123,7 @@ router.put("/:id", modCampRestriction, checkCampgrdOwner, (req,res) => {
             if(err) { console.log(err); res.redirect("/campgrounds"); }
             else{
                 //console.log(updatedCamp);
-                req.flash("success", "Campground Updated Successfully")
+                req.flash("success", "Restaurant Updated Successfully")
                 res.redirect('/campgrounds/'+ req.params.id );
             }
         });
@@ -135,12 +136,12 @@ router.delete("/:id", isLoggedIn, checkCampgrdOwner, (req,res) =>{
 
     Campground.findByIdAndDelete( req.params.id, (err,deletedObj) =>{
 
-        if(err) { req.flash("error", "There was a problem deleting the campground. ");
+        if(err) { req.flash("error", "There was a problem deleting the Restaurant. ");
                   res.redirect("/:id"); }
         Comment.deleteMany( { _id: { $in: deletedObj.comments }}, (err) => {
 
             if(err) { return console.log(err); }
-            req.flash("success", "Campground deleted successfully.")
+            req.flash("success", "Restaurant deleted successfully.")
             res.redirect('/campgrounds'); 
         });  
     });
@@ -152,7 +153,7 @@ function isLoggedIn(req,res,next){
     if(req.isAuthenticated()){
         return next();
     }
-    req.flash("error", " You need to be logged in to do that!");
+    req.flash("error", "You need to be logged in to do that!");
     res.redirect('/login');
 }
 
@@ -168,12 +169,12 @@ function checkCampgrdOwner(req,res,next){
                 next();
             }
             else{
-                req.flash("error", "Only Campground owners have permission to Delete/Edit.")
+                req.flash("error", "Only Restaurant owners have permission to Delete/Edit.")
                 res.send("/campgrounds" + camp.id);
             }
         })
         .catch( (err) => {
-            req.flash("error", "Campground doesn't exist!")
+            req.flash("error", "Restaurant doesn't exist!")
             console.log(err);
             res.redirect("/campgrounds");
          });

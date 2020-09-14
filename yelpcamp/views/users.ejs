@@ -9,6 +9,7 @@
                 <img class="figure-img img-fluid" src="<%= user.avatar %>" alt="Profile Photo">
                 <div class="figure-caption">
                     <h4> USERNAME: <%= user.username %> </h4>
+                    <h4> ADMIN STATUS: <% (user.isAdmin)? "Moderator" : "Regular user" </h4>
                 </div>
             </div>
         </div>
@@ -16,7 +17,7 @@
         <div class="col-md-8 float-right" id="profilepage">
             <h4> <strong> NAME </strong>: <%=user.firstName + ' ' + user.lastName %></h4>
             <h4> <strong> BIO</strong> : <%= user.bio %> </h4> 
-            <h4> <strong>EMAIL</strong> : <%= user.email %> </h4>
+            <h4> <strong> EMAIL</strong> : <%= user.email %> </h4>
             <h5> <a href="/users/<%=user.id%>/password/reset"> RESET YOUR PASSWORD </a> </h5>
         </div>
 
