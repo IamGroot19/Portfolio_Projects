@@ -20,12 +20,16 @@
                 <img class="figure-img img-fluid" src="<%= camp.image %>" alt="Campground's Photo">
                 <div class="figure-caption">
                     <br>
-                    <% let avgRating = 0; %>
-                    <% camp.comments.forEach( (comment) => { avgRating+=comment.rating }); %>
-                    <% avgRating = avgRating/camp.comments.length; %>   
-
+                    
+                <%    if(camp.cmntLoopFlag){  %>
+                        <% let avgRating = 0; %>
+                        <% camp.comments.forEach( (comment) => { avgRating+=comment.rating }); %>
+                        <% camp.avgRating = avgRating/camp.comments.length; %>   
+                <%        camp.cmntLoopFlag = false;  %>
+                <%    }  %>
+                    
                     <h4 class="float-right"> Rs. <%= camp.price %> <span style="display: inline; font-size:small"> (per 2 people per meal) </span> </h4>
-                    <h4> <a href="" > <%= camp.name %> </a> | <span style="display: inline; font-size:medium"> AVERAGE RATING : <%= avgRating %> </span> </h4>
+                    <h4> <a href="" > <%= camp.name %> </a> | <span style="display: inline; font-size:medium"> AVERAGE RATING : <%= camp.avgRating %> </span> </h4>
                     <p> <%= camp.description %> </p>
                     
                     <p> <em> Written by <a href="/users/<%= camp.author.id%>" > <%= camp.author.username %> </a> on <%= moment(camp.createdAt).tz("Asia/Kolkata").format('DD MMM YYYY') %> </em> </p>
@@ -50,7 +54,36 @@
 
             <div class="card card-body bg-light">
                 <div class="text-right">
-                    <p> <a class ="btn btn-primary" href="/campgrounds/<%= camp._id %>/comments/new"> Add New Comment </a> </p> 
+
+                    <% let curuser = JSON.stringify(camp.author.id); %>
+                    <% let campowner = JSON.stringify(currentUser.id);   %>
+                    <% let commentStatus = true;  %>
+                    
+                    <!-- If current user is admin or if they are owner then they can't post review -->
+                    <% if( currentUser.isAdmin || (curuser === campowner) ){ %>
+                    <%    commentStatus = true; %>
+                   
+                    <!-- If user hasnot reviewed any hotel at all, then they haven't reviewed this camp also-->
+                    <% } else if(currentUser.reviewedCamps.length == 0){ %>
+                                <% commentStatus = false; %>
+                    
+                    <!-- Loop through list of hotels the user has reviewed & if this hotel not in list, enable the button. -->
+                    <% } else { %>
+                        
+                        <% for(let i=0; i< currentUser.reviewedCamps.length; i++){ %>
+                            <% if (currentUser.reviewedCamps[i] == camp._id ){  %>
+                            <%        commentStatus = true; break;  %>
+                            <% }else{ %>
+                            <%        commentStatus = false; %>
+                            <% } %>
+                        <% }; %>
+                    <% }; %>
+
+                    <% if(commentStatus){ %>
+                        <p> <a class ="btn btn-primary disabled" href="/campgrounds/<%= camp._id %>/comments/new"> Add New Comment </a> </p>
+                    <% }else{ %>
+                        <p> <a class ="btn btn-primary" href="/campgrounds/<%= camp._id %>/comments/new"> Add New Comment </a> </p>
+                    <% }; %>
                 </div>
                 <hr>
                 <% camp.comments.forEach( (comment) => { %>
@@ -101,7 +134,7 @@ function initMap() {
     });
     var contentString = `<strong><%- JSON.parse(JSON.stringify(camp.name))%>-<% JSON.parse(JSON.stringify(camp.location))%></strong> <p><%- JSON.parse(JSON.stringify(camp.description)) %></p> `
 
-    console.log(contentString);
+    //console.log(contentString);
     var infowindow = new google.maps.InfoWindow({
         content: contentString
     });

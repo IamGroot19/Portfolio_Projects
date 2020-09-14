@@ -1,7 +1,8 @@
+
 let router = require('express').Router();
 const nodemon = require('nodemon');
 let passport = require('passport'); 
-const user = require('../db/user');
+
 let User = require('../db/user');
 const async = require('async');
 const crypto = require('crypto');
@@ -77,10 +78,10 @@ router.post('/forgot', (req,res, next) => {
                 // to protect the password, we export the password to the environment on which app is running & import it from there. So, inside the actual environment (using a terminal) go type the following code: `export GMAILPW=yourActualPassword`. 
                 auth:{
                     user: 'bharathram.wissenaire@gmail.com',
-                    pass: process.env.GMAILPW
+                    pass: process.env.GMAIL_PW
                 }
             });
-
+    
             // receiver's email details
             let emailDetails = {
                 
@@ -91,13 +92,15 @@ router.post('/forgot', (req,res, next) => {
                 text: 'Hello there, you are receiving this email because you (or someone else) have requested for a password reset of your account. You can click or copy-paste the following link in your browser: ' + 'http://' + req.headers.host + '/reset/' + token + '\n\n. If it wasn\'t you kindly ignore this email. Your password wont be changed. '
 
             };
+            //console.log('emailDetails object created: ', emailDetails);
 
             // send the email based on above details
             smtpTransport.sendMail( emailDetails, function(err){
-                /*if(err){
+                if(err){
+                    console.log(err);
                     req.flash('error', 'something went wrong while sending email (check POST forgot routehandler indexRoutes'); 
                     return res.redirect('/forgot');
-                } */
+                }
                 console.log('mail sent');
                 req.flash('success', 'An email has been sent to the registered email with further instructions');
                 done(err, 'done');

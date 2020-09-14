@@ -1,9 +1,11 @@
 ///////////////////  ALL CAMPGROUNDS RELATED ROUTES IN THIS FILE //////////////////////
 
 let router = require('express').Router();
-const { request } = require('express');
+const express = require('express');
 let Campground = require('../db/campgrounds');
 let Comment = require('../db/comment');
+let User = require('../db/user.js');
+
 const NodeGeocoder = require('node-geocoder');
 
 // Right before middlewares, put this geocoder thingy...
@@ -27,16 +29,23 @@ router.get("/", (req,res) => {
     });   
 });
 
+
+// NEW route
+router.get("/new", isLoggedIn, modCampRestriction, (req,res) => {
+    
+    res.render("campgrounds/newcamp.ejs");
+}); 
+
 // CREATE Route
-router.post('/', isLoggedIn,  (req,res) => {
+router.post('/', isLoggedIn, modCampRestriction, (req,res) => {
+    
     
     let name = req.body.campName; 
     let image = req.body.campImg; 
     let desc = req.body.description;
     let price = req.body.campPrice; 
     let author = { id : req.user._id, username: req.user.username };
-    console.log(req.body.location);
-    console.log(typeof req.body.location);
+    let cmntLoopFlag = true;
     Geocoder.geocode( req.body.location, (err,data) => {
 
         if(err || !data.length){
@@ -51,7 +60,7 @@ router.post('/', isLoggedIn,  (req,res) => {
         let location= data[0].formattedAddress;
 
         let campgrd = { name: name, image: image, description:desc, author:author, price:price,
-            lat:lat, lon:lon, location:location };
+            lat:lat, lon:lon, location:location, cmntLoopFlag:cmntLoopFlag };
 
         Campground.create(campgrd)
         .then( (newlyCreatedCamp) => {
@@ -65,12 +74,6 @@ router.post('/', isLoggedIn,  (req,res) => {
     }); // end of geocoder() 
 
 }); //end of routehandler
-
-// NEW route
-router.get("/new", isLoggedIn, (req,res) => {
-
-    res.render("campgrounds/newcamp.ejs");
-}); 
 
 
 // SHOW route
@@ -89,7 +92,7 @@ router.get("/:id", isLoggedIn, (req,res)=>{
 });
 
 // EDIT campground
-router.get('/:id/edit', checkCampgrdOwner, (req,res) =>{
+router.get('/:id/edit',modCampRestriction, checkCampgrdOwner, (req,res) =>{
 
     Campground.findById(req.params.id, (err, camp) =>{
 
@@ -100,7 +103,7 @@ router.get('/:id/edit', checkCampgrdOwner, (req,res) =>{
 });
 
 // UPDATE campground
-router.put("/:id", (req,res) => {
+router.put("/:id", modCampRestriction, checkCampgrdOwner, (req,res) => {
     
     Geocoder.geocode( req.body.location, (err,data) => {
         if(err || !data.length){
@@ -110,8 +113,9 @@ router.put("/:id", (req,res) => {
         let lat = data[0].latitude;
         let lon = data[0].longitude;
         let location= data[0].formattedAddress;
-    
-        let updatedCamp = { name: req.body.campName, image:req.body.campImg, description:req.body.description,  price:req.body.campPrice, lat:lat, lon: lon, location:location };
+        let cmntLoopFlag = true;
+        let avgRating = 0; // due to update, difficult to track just the rating parameter - so calculate fro m scratch for every update. 
+        let updatedCamp = { name: req.body.campName, image:req.body.campImg, description:req.body.description,  price:req.body.campPrice, lat:lat, lon: lon, location:location, cmntLoopFlag:cmntLoopFlag };
     
         Campground.findByIdAndUpdate( req.params.id, updatedCamp, (err,updatedCamp) =>{
             
@@ -127,7 +131,7 @@ router.put("/:id", (req,res) => {
 
 
 // DELETE campground
-router.delete("/:id", checkCampgrdOwner, (req,res) =>{
+router.delete("/:id", isLoggedIn, checkCampgrdOwner, (req,res) =>{
 
     Campground.findByIdAndDelete( req.params.id, (err,deletedObj) =>{
 
@@ -179,5 +183,17 @@ function checkCampgrdOwner(req,res,next){
         res.redirect("/campgrounds/"+ camp.id );
     }
     
+    
+}
+
+function modCampRestriction(req, res, next){
+    if(req.user.isAdmin){
+        req.flash('error', 'Mods are not allowed to do that');
+        res.redirect('/campgrounds/'); 
+    }
+    else{
+        next();
+    }
+
 }
 module.exports = router; 

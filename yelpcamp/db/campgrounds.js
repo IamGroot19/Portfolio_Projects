@@ -1,5 +1,7 @@
 let mongoose = require('mongoose');
 
+
+// cmntLoopFlag is a flag set to true or fals so as to indicate in show.ejs whether t=any rating has changed after the last time the average Rating was updated. Optimises compuation. 
 let campgroundSchema = new mongoose.Schema({
     name: String,
     image: String,
@@ -8,6 +10,8 @@ let campgroundSchema = new mongoose.Schema({
     location: String,
     lat: Number,
     lon: Number,
+    avgRating: Number,
+    cmntLoopFlag: Boolean,
     createdAt: { type: Date, default : Date.now },
     // Data association
     author: {

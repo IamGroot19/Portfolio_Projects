@@ -389,3 +389,18 @@ You have to use <%- JSON.stringiy(camp.id) %> inorder to use ejs template values
 
 Few other helpful liks:
 https://stackoverflow.com/questions/20585055/how-to-fix-uncaught-invalidvalueerror-setposition-not-a-latlng-or-latlnglitera/20585117
+
+9.6 Small changes  
+    - Change the type of "price" field in campgroundSchema to Number and make changes in show.ejs, routehandlers accordingly. 
+
+//////////////////////   SECTION 10 - OPTIMISATION FOR REVIEW (comment) SYSTEM ///////////
+
+
+More Optimsations & Auhtorisations : BIG COMMIT (forgot to break it out into smaller commits, ref notes.txt)
+
+    - ADMIN ACCOUNTS CAN ONLY DELETE CAMPGROUNDS/COMMENTS (not edit)
+    - ADMIN ACCOUNTS CAN'T CREATE CAMPGROUNDS/COMMITS
+    - USER ACCOUNTS CAN'T COMMENT ON THEIR OWN CAMPGROUNDS
+    - USER ACCOUNTS CAN COMMENT ONLY ONCE PER POST
+    - OPTIMISED THE WAY THE APP DETERMINES USER AUTHORISATION REGARDING COMMENTS
+    - OPTIMISED THE WAY THE APP CALCULATES Avg RATINGS (with a cmntLoopFlag)

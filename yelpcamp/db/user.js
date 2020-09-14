@@ -12,6 +12,11 @@ let UserSchema = new mongoose.Schema({
     resetPasswordToken: String,
     resetPasswordExpires: Date,
     bio: String,
+    reviewedCamps: [
+      {
+        type: String
+      }
+  ],
     isAdmin: { type: Boolean, default: false} 
 });
 
