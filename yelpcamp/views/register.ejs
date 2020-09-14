@@ -1,6 +1,6 @@
 <%- include('partials/header.ejs') %>
                 
-
+<!--
 <div class="container text-center">
     <h1> SIGN UP </h1>
     <form action="/register" method="POST">
@@ -15,36 +15,56 @@
             <button> Signup </button> 
     </form>
 </div>
+-->
 
-<!-- CHANGE THE SIGNUP FORM TO BETTER BOOTSTRAP VERSION WHEN YOU HAVE TIME 
     <div class="container">
-    <h1 style="margin-left: 7.5em; margin-block-start: 2em ;"> Create New Campgrounds </h1><br><br>
+    <h1 style="margin-left: 7.5em; margin-block-start: 2em ;"> CREATE YOUR ACCOUNT </h1><br><br>
     
-        <form action="/campgrounds" method="POST">
+         <form action="/register" method="POST">
             <div style=" width:60%; margin: 0 auto;">
                 <div class="form-group">
-                    <label for="campName"> Camp Name </label>
-                    <input type="text" class="form-control" placeholder="Camp's Name" id="campName" name='campName'>
+                    <label for="firstname"> First Name </label>
+                    <input type="text" class="form-control" placeholder="First Name" id="firstName" name='firstname' required>
                 </div>
                 <div class="form-group">
-                    <label for="campImg"> Camp Image </label>
-                    <input type="text" class="form-control" placeholder="Camp Image URL" name='campImg' id="campImg">
+                    <label for="lastname"> Last name </label>
+                    <input type="text" class="form-control" placeholder="Last Name" name='lastname' id="lastname" required>
                 </div>
                 <div class="form-group">
-                    <label for="campDesc"> Camp Description </label>
-                    <textarea type="text" class="form-control"  rows=4 placeholder="Describe the camp!" rows=3 name='description'></textarea>
+                    <label for="email"> Email-ID</label>
+                    <input type="text" class="form-control" placeholder="Last Name" name='email' id="email" required>
                 </div>
                 <div class="form-group">
-                    <label for="campDesc"> Approximate Charges </label>
-                    <input type="text" class="form-control"  placeholder="Approx price for 2 or 4 people, per session" name='campPrice' value="Rs ">
+                    <label for="username"> Username </label>
+                    <input type="text" class="form-control" placeholder="Last Name" name='username' id="username" required>
                 </div>
+
+                <div class="form-group">
+                    <label for="password"> Password </label>
+                    <input type="password" class="form-control" placeholder="Choose a strong password!" name='password' id="password" >
+                </div>
+
+                <div class="form-group">
+                    <label for="admincode"> Admin Code (For moderators only) </label>
+                    <input type="password" class="form-control" placeholder="Provided to you already" name='admincode' id="admincode" >
+                </div>
+
+                <div class="form-group">
+                    <label for="avatar"> Avatar </label>
+                    <input type="text" class="form-control" placeholder="Profile Picture URL (optional)" name='avatar' id="avatar" required>
+                </div>
+                <div class="form-group">
+                    <label for="bio"> Bio </label>
+                    <textarea type="text" class="form-control"  rows=4 placeholder="About yourself"  name='description'></textarea>
+                </div>
+
                 <button type="submit" class="btn btn-primary btn-block">Submit</button>
                 <br> 
                 <p style="margin: 0 auto;" class="text-center"> <a href="/campgrounds">Go Back</a> <p>
             </div>
         </form>    
 </div>
--->
+
 <div style="margin:4em;">
     <h3> IMPORTANT NOTE: </h3>
     <ul> <h5>

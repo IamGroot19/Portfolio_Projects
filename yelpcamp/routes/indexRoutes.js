@@ -14,6 +14,11 @@ router.get("/", (req,res) => {
     res.render("landing");
 });
 
+// About Page
+router.get('/about', (req, res) =>{
+    res.render('about.ejs');
+});
+
 // Show register form
 router.get( '/register', (req,res)=>{
     res.render('register.ejs');
