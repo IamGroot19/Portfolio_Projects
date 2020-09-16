@@ -28,7 +28,7 @@ To know more about basic features, check out about page of the website.
 - **Database**: MongoDB Atlas (Cloud based MongoDB service)
 - **Authentication**: PassportJS (Strategy: Username + Password) 
 - **Email service**: Nodemailer (for password reset)
-- **Deployment**: AWS Beanstalk
+- **Deployment**: AWS Beanstalk + CI/CD Pipeline to automatically deploy the new code
 
 ### Few Notable Features:
 - Password reset (if user wants to change their old password with a new one)
