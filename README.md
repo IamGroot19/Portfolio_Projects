@@ -10,5 +10,5 @@ This repository contains a set of portfolio projects to demonstrate my experienc
 
 ### Project 2: Chat-app
 - A Socket.io based app for live group chats.
-- Live App Link: 
-- Github repo Link: 
+- Live App Link: https://chat-app-bharath.herokuapp.com/index.html 
+- Github repo Link: https://github.com/IamGroot19/Portfolio_Projects/tree/chat_app_v1_deploy 
