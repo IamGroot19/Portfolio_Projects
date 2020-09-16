@@ -147,7 +147,8 @@ function initMap() {
     });
 }
 </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC05qijp9tY5ntV4jK9ItppPgGW6vjKMrQ&callback=initMap"> </script>
+<% let mapsUrl = "https://maps.googleapis.com/maps/api/js?key="+process.env.API_EJS_KEY+"&callback=initMap"; %>
+<script async defer src=<%=mapsUrl %> > </script>
 
 <%- include('../partials/footer') %>
   
