@@ -28,7 +28,7 @@ To know more about basic features, check out about page of the website.
 - **Database**: MongoDB Atlas (Cloud based MongoDB service)
 - **Authentication**: PassportJS (Strategy: Username + Password) 
 - **Email service**: Nodemailer (for password reset)
-- **Deployment**: AWS Beanstalk
+- **Deployment**: AWS Beanstalk + CI/CD Pipeline to automatically deploy the new code
 
 ### Few Notable Features:
 - Password reset (if user wants to change their old password with a new one)
@@ -51,7 +51,7 @@ NOTE: This project initially started out as a camping ground review website and 
 
 ## DATABASE SCHEMAS
 
-3 collections (NoSQL equivalent of SQL’s Relations)  exists: a) [Restaurants](../db/campgrounds.js)   b) [Reviews](../db/comment.js) c) [Users](../db/user.js)
+3 collections (NoSQL equivalent of SQL’s Relations)  exists: a) [Restaurants](/db/campgrounds.js)   b) [Reviews](/db/comment.js) c) [Users](/db/user.js)
 
 <ins>Restaurant schema contains following data</ins>:
     Name, Image, Price, Description, Location (or address), Latitude, Longitude, Average Rating, AuthorID, CommentID, cmntLoopFlag. 
@@ -71,10 +71,10 @@ Data Association(Referencing) vs Embedding:
 ## ROUTES:
 
 4 major Route types (all based on above schemas) viz. 
-- **[Index routes](../routes/indexRoutes.js)** (Login, Signup, Logout).
-- **[Credential Routes](../routes/credentialRoutes.js)** (Forgot password, Password reset).
-- **[Restaurant routes](../routes/campgroundRoutes.js)** (**C**reate/**R**ead/**U**pdate/**D**elete restaurants).
-- **[Reviews routes](../routes/coomentRoutes.js)** (**C**reate/**R**ead/**U**pdate/**D**elete comments). 
+- **[Index routes](/routes/indexRoutes.js)** (Login, Signup, Logout).
+- **[Credential Routes](/routes/credentialRoutes.js)** (Forgot password, Password reset).
+- **[Restaurant routes](/routes/campgroundRoutes.js)** (**C**reate/**R**ead/**U**pdate/**D**elete restaurants).
+- **[Reviews routes](/routes/coomentRoutes.js)** (**C**reate/**R**ead/**U**pdate/**D**elete comments). 
 
 As much as possible, Route names have been designed based on [RESTful naming conventions](https://restfulapi.net/resource-naming).
 
@@ -96,7 +96,7 @@ The routes are as follows:
 
 - `passport`, `passport-local`, `passport-local-mongoose` packages have been used for authentication purposes. 
 
-- A username/password type of authentication strategy has been used. (Check [index routes](../routes/indexRoutes.js))
+- A username/password type of authentication strategy has been used. (Check [index routes](/routes/indexRoutes.js))
 
 - For authorisation actions like preventing one user from deleting another user’s post (& some more restrictions – check about page of the webiste more info), middlewares have been extensively inside route handlers. 
 
@@ -137,7 +137,7 @@ The routes are as follows:
 - Image upload in reviews. 
 - Editable user profiles.
 
-## Dependencies (can be found in [package.json](../package.json) file as well)
+## Dependencies (can be found in [package.json](/package.json) file as well)
     "async": "^3.2.0",
     "connect-flash": "^0.1.1",
     "dotenv": "^8.2.0",
