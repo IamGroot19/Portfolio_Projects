@@ -6,8 +6,6 @@
 
 */
 
-
-
 // we want to access the messages typed in the chatbox (by accessing DOM elements), transfer it server, which inturn wil broadcast it to all other users.
 const chatForm = document.getElementById("chat-form"); 
 const chatMessages = document.querySelector('.chat-messages');
@@ -16,7 +14,6 @@ const userList  = document.getElementById('users')     // from chat.html
 
 
 // Get username & chat room name from query string. {ignoreQueryPrefix: true} will ignore symbols like qn mark
-
 const parsedQueryString = Qs.parse(window.location.search, { ignoreQueryPrefix: true }); 
 const username = parsedQueryString["?username"];
 const room = parsedQueryString["room"];
