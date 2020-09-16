@@ -4,6 +4,11 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<!-- JS, Popper.js, and jQuery -->
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+		
 		<link
 			rel="stylesheet"
 			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
@@ -14,7 +19,7 @@
 		<title>Chat App</title>
 	</head>
 	<body>
-		<div class="join-container">
+		<div class="join-container text-center">
 			<header class="join-header">
 				<h1><i class="fas fa-smile"></i> Chat App</h1>
 			</header>
@@ -44,6 +49,18 @@
 					<button type="submit" class="btn">Join Chat</button>
 				</form>
 			</main>
+			<div class=" container about-text text-center">
+				<br> <br>
+				<h4> ABOUT THIS APP </h4> <br>
+				<h5>
+					<ul>
+						<li> This is a Socket.io based (web sockets) live chat website. </li> <br>
+						<li> Users can join particular room of their liking and chat with other users who are online in the same room. </li> <br>
+						<li> Note that once you leave a chat-room, all the details of chat will no longer be available to you. </li> <br>
+						<li> More information can be found at my Github Page</li>
+					</ul>
+				</h5>
+			</div>
 		</div>
 	</body>
 </html>

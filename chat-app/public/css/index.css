@@ -180,6 +180,11 @@ a {
 	width: 100%;
 }
 
+.about-text{
+	font: 200;
+	color: black;
+}
+
 @media (max-width: 700px) {
 	.chat-main {
 		display: block;
@@ -189,3 +194,4 @@ a {
 		display: none;
 	}
 }
+

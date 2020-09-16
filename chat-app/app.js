@@ -13,7 +13,7 @@ const io = socketio(server);
 // Set static folder
 app.use(express.static(path.join(__dirname, "public")));
 
-const botname = 'ChatApp Bot'; 
+const botname = 'NOTIFICATION'; 
 
 /* Run when client connects; io.on() listens for some kinda event (in this case, listens for a new connection from a client). But then simply listening for new connections is not much helpful. What we want is some sort of bidrectional communication. */
 io.on('connection', (socket) => {
@@ -32,8 +32,7 @@ io.on('connection', (socket) => {
         //  Welcome the user when they join - we catch this in the client side using main.js
         socket.emit('message', formatMessage(botname, 'Welcome to chat app'));  
 
-
-        /* broadcast when a user connects. Since there are different rooms, you need to broadcast about user's entry to their corresponding room. This is done by using `socket.to(user.room).emit() instead of a simple            `socket.brodcast.emit()`
+        /* broadcast when a user connects. Since there are different rooms, you need to broadcast about user's entry to their corresponding room. This is done by using `socket.to(user.room).emit() instead of a simple `socket.brodcast.emit()`
         Diff b/w socket.emit(), io.emit(), broadcast.emit() is that:
             (i)   broadcast.emit() notifies to everyone except for the person who joined 
             (ii)  socket.emit() only emits to the single client who joined. 
@@ -47,7 +46,6 @@ io.on('connection', (socket) => {
             room: user.room,
             users: getRoomUsers(user.room)
         });
-
 
     }); 
     
