@@ -48,10 +48,10 @@ router.post("/register", (req,res)=>{
         // once a user has signed up, we log them in, authenticate them and redirect them to campgrounds page once logged in. If
         passport.authenticate("local")(req, res, ()=>{
             if(user.isAdmin){
-                req.flash("success", "Welcome to YelpCamp "+ user.username + ".You are also an Admin.");
+                req.flash("success", "Welcome to FoodCravings "+ user.username + ".You are also an Admin.");
             }
             else{
-                req.flash("success", "Welcome to YelpCamp "+ user.username );
+                req.flash("success", "Welcome to FoodCravings "+ user.username );
             }
             res.redirect("/campgrounds"); });
     });
