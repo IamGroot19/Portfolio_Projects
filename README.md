@@ -22,6 +22,8 @@
 A restaurant review website where owners can add their restaurants and users can review it. (Kind of like a Zomato clone). 
 To know more about basic features, check out about page of the website.
 
+### Live App link: http://foodcravings-env.eba-6wjaw32p.ap-south-1.elasticbeanstalk.com/
+
 ### What is it made of?
 - **Frontend**: HTML, CSS, Bootstrap, Javascript, EJS (templates)
 - **Backend**: NodeJS, Express
