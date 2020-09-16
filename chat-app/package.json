@@ -4,7 +4,7 @@
   "description": "A simple chat room for realtine discussion. Contains 5-6 rooms (pre-determined by me), users can choose a username and enter the chat room and exit when they want. Tech Stack: HTML,CSS, JS(plain), NodeJS< ExpressJS, Socket.io",
   "main": "app.js",
   "scripts": {
-    "start": "node app",
+    "start": "node app.js",
     "dev": "nodemon app"
   },
   "author": "Bharath Ram",
