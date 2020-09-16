@@ -87,9 +87,9 @@ router.post('/forgot', (req,res, next) => {
                 
                 from: 'bharathram.wissenaire@gmail.com', // sender address
                 to: user.email , // list of receivers
-                subject: "PASSWORD RESET", // Subject line
+                subject: "FOODCRAVNGS PASSWORD RESET", // Subject line
                 
-                text: 'Hello there, you are receiving this email because you (or someone else) have requested for a password reset of your account. You can click or copy-paste the following link in your browser: ' + 'http://' + req.headers.host + '/reset/' + token + '\n\n. If it wasn\'t you kindly ignore this email. Your password wont be changed. '
+                text: 'Hello there, you are receiving this email because you (or someone else) have requested for a password reset of your FoodCravings account. You can click or copy-paste the following link in your browser: ' + 'http://' + req.headers.host + '/reset/' + token + '\n\n. If it wasn\'t you kindly ignore this email. Your password wont be changed. '
 
             };
             //console.log('emailDetails object created: ', emailDetails);
