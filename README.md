@@ -1,7 +1,7 @@
 # Portfolio_Projects
 This repository contains a set of portfolio projects to demonstrate my experience with the set of technologies mentioned in my Resume.
 
-**IMPORTANT NOTE**: For deployment reasons,  the final-to-be deployed versions of the project have been kept in a separate branch from that of the master branch. So, to see readme document of project please check below.  
+**IMPORTANT NOTE**: For deployment reasons,  the final-to-be deployed versions of the project have been kept in separate branches from that of the master branch. So, to see those projects & their detailed ReadMe files, please check below.  
 
 ### Project 1: FoodCravings 
 - A CRUD app with authentication for reviewing restaurants.
