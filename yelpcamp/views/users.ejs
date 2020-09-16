@@ -7,9 +7,15 @@
         <div class="col-md-4 float-left">
             <div class="figure">
                 <img class="figure-img img-fluid" src="<%= user.avatar %>" alt="Profile Photo">
-                <div class="figure-caption">
-                    <h4> USERNAME: <%= user.username %> </h4>
-                    <h4> ADMIN STATUS: <% (user.isAdmin)? "Moderator" : "Regular user" </h4>
+                <div class="figure-caption" style="color: black;">
+                    <% let adminStatus = 'Unknown'; %>
+                    <% if(user.isAdmin){ %>
+                    <% adminStatus = 'Moderator'; %>
+                    <% } else{ %>
+                    <% adminStatus = 'Regular User'; %>
+                    <% } %>
+                    <h4 style="font-size: medium;"> <strong> USERNAME: </strong> <%= user.username %> </h4>
+                    <h4 style="font-size: medium;"> <strong> ADMIN STATUS: </strong> <%= adminStatus %> </h4>
                 </div>
             </div>
         </div>

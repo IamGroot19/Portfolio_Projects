@@ -25,11 +25,11 @@ const commentRoutes = require('./routes/commentRoutes');
 const indexRoutes = require('./routes/indexRoutes');
 const credentialRoutes = require('./routes/credentialRoutes');
 
-mongoose.connect("mongodb://localhost/yelpCamp_db",  
+mongoose.connect(process.env.DB_URL,  
                 { useNewUrlParser: true, useUnifiedTopology: true }, 
                 (err, client) => {
                     if (err) return console.log(err)
-                    console.log("Successfully connected to DB...");
+                    console.log("Freaking connected to Atlas DB...");
                 });
 
 
@@ -79,7 +79,7 @@ app.use( (req,res,next) => {
 
 
 // Importing router from routes file
-app.use( '/', indexRoutes);
+app.use( '/', indexRoutes);  
 app.use( '/campgrounds', campgroundRoutes);
 app.use( '/campgrounds/:id/comments', commentRoutes);
 app.use('/', credentialRoutes); 

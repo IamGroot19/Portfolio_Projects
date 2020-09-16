@@ -55,14 +55,14 @@ router.post( "/", isLoggedIn,modCommentRestriction, (req,res) => {
                     camp.comments.push(savedComment); 
                     camp.save()
                         .then( () =>{
-                            //console.log('comment saved in camp')
+                            console.log('comment saved in camp')
                         });
 
                     curUser = req.user; 
                     curUser.reviewedCamps.push(camp._id); 
                     curUser.save()
                         .then( (savedUser)=>{
-                            //console.log("post saved in user: ", savedUser);
+                            console.log("Reviewed Restaurant saved in user: ", savedUser.username);
                         })
                         .catch( (err) =>{
                             console.log('Error saving reviewed restaurant in user: ', err);

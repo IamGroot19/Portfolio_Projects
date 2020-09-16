@@ -30,26 +30,12 @@ router.get("/", (req,res) => {
 });
 
 
-// SHOW route
-router.get("/:id", isLoggedIn, (req,res)=>{
-
-    Campground.findById(req.params.id)
-        .populate("comments")
-        .exec( (err, camp) => {
-            
-            if(err){ req.flash("error", "There was a problem in fetching the Restaurant from database"); }
-            else{
-                //console.log('camp object insider: ' ,camp);
-                res.render( "campgrounds/show.ejs", {camp:camp});     
-            }
-        }); 
-});
-
-
 // NEW route
-router.get("/new", isLoggedIn, modCampRestriction, (req,res) => {
-    
-    res.render("campgrounds/newcamp.ejs");
+// Express picks the first matching routing when a request is made to it. So, this route must come before the '/:id' else router will think that 'new' is also the name of a camp
+router.get('/new', isLoggedIn,  modCampRestriction, (req,res) => {
+
+    //res.send('new camp');
+    res.render("../views/campgrounds/newcamp.ejs");
 }); 
 
 // CREATE Route
@@ -91,6 +77,20 @@ router.post('/', isLoggedIn, modCampRestriction, (req,res) => {
 
 }); //end of routehandler
 
+// SHOW route
+router.get("/:id", isLoggedIn, (req,res)=>{
+
+    Campground.findById(req.params.id)
+        .populate("comments")
+        .exec( (err, camp) => {
+            
+            if(err){ req.flash("error", "There was a problem in fetching the Restaurant from database"); }
+            else{
+                //console.log('camp object insider: ' ,camp);
+                res.render( "campgrounds/show.ejs", {camp:camp});     
+            }
+        }); 
+});
 
 // EDIT campground
 router.get('/:id/edit',modCampRestriction, checkCampgrdOwner, (req,res) =>{
