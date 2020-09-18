@@ -1,7 +1,7 @@
 # INTRODUCTION
 
 ### <ins>WHAT IS IT</ins>? A Web-Based Chat App For LIVE Conversations (via Sockets)
-### <ins>LIVE LINK</ins>:  <...heroku link> 
+### <ins>LIVE LINK</ins>:  https://chat-app-bharath.herokuapp.com/index.html
 ### <ins>WHAT IS IT MADE OF?</ins>
 - **Front end**: HTML, CSS, Bootstrap, JS.
 - **Backend**: NodeJS, ExpressJS, Socket.io
