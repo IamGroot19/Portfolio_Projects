@@ -6,7 +6,7 @@
 - **Front end**: HTML, CSS, Bootstrap, JS.
 - **Backend**: NodeJS, ExpressJS, Socket.io
 ### <ins>USE CASE</ins>: 
-For confidential communication where the information shouldn't persist anywhere once chat between both the paties is over. 
+For confidential communication where the information shouldn't persist anywhere once chat between both the parties is over. 
 
 ---
 
